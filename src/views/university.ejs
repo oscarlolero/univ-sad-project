@@ -52,38 +52,16 @@
                 </tr>
             </thead>
             <tbody>
+                <% rows.forEach(function(schedule) { %>
                 <tr class="row100">
-                    <td class="column100 column1" data-column="column1">Matemáticas</td>
-                    <td class="column100 column2" data-column="column2">Alfonso López</td>
-                    <td class="column100 column3" data-column="column3">9.0</td>
-                    <td class="column100 column4" data-column="column4">6.0</td>
-                    <td class="column100 column5" data-column="column5">8.5</td>
-                    <td class="column100 column6" data-column="column6">7.96</td>
+                    <td class="column100 column1" data-column="column1"><%= schedule.professor_name %></td>
+                    <td class="column100 column2" data-column="column2"><%= schedule.course_code %></td>
+                    <td class="column100 column3" data-column="column3"><%= schedule.period %></td>
+                    <td class="column100 column4" data-column="column4"><%= schedule.time_block %></td>
+                    <td class="column100 column5" data-column="column5"><%= schedule.classroom %></td>
+                    <td class="column100 column6" data-column="column6"><%= schedule.classroom_building %></td>
                 </tr>
-                <tr class="row100">
-                    <td class="column100 column1" data-column="column1">Matemáticas</td>
-                    <td class="column100 column2" data-column="column2">Alfonso López</td>
-                    <td class="column100 column3" data-column="column3">9.0</td>
-                    <td class="column100 column4" data-column="column4">6.0</td>
-                    <td class="column100 column5" data-column="column5">8.5</td>
-                    <td class="column100 column6" data-column="column6">7.96</td>
-                </tr>
-                <tr class="row100">
-                    <td class="column100 column1" data-column="column1">Matemáticas</td>
-                    <td class="column100 column2" data-column="column2">Alfonso López</td>
-                    <td class="column100 column3" data-column="column3">9.0</td>
-                    <td class="column100 column4" data-column="column4">6.0</td>
-                    <td class="column100 column5" data-column="column5">8.5</td>
-                    <td class="column100 column6" data-column="column6">7.96</td>
-                </tr>
-                <tr class="row100">
-                    <td class="column100 column1" data-column="column1">Matemáticas</td>
-                    <td class="column100 column2" data-column="column2">Alfonso López</td>
-                    <td class="column100 column3" data-column="column3">9.0</td>
-                    <td class="column100 column4" data-column="column4">6.0</td>
-                    <td class="column100 column5" data-column="column5">8.5</td>
-                    <td class="column100 column6" data-column="column6">7.96</td>
-                </tr>
+                <% }) %>
             </tbody>
         </table>
     </div>

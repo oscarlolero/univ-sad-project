@@ -1,8 +1,7 @@
 const sql = require("msnodesqlv8");
 
-
+const database = require('../config/database');
 module.exports = (app, passport) => {
-
     app.get('/', (req,res) => {
         res.redirect('/university');
     });
@@ -40,9 +39,16 @@ module.exports = (app, passport) => {
                 username: req.session.passport.user.username
             });
         } else {
-            res.render('university', {
-                isAdmin: 0
-            });  
+            const query = 'SELECT professor_name, course_code, period, time_block, classroom, classroom_building FROM vw_Schedule';
+            sql.query(database.msurl, query, (err, rows) => {
+                if(err) {
+                    return alert('Database error.');
+                }
+                res.render('university', {
+                    isAdmin: 0,
+                    rows: rows
+                });
+            });
         }
     });
 };
