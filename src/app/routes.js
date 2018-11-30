@@ -1,6 +1,7 @@
 const sql = require("msnodesqlv8");
 
 const database = require('../config/database');
+
 module.exports = (app, passport) => {
     app.get('/', (req,res) => {
         res.redirect('/university');
@@ -32,14 +33,22 @@ module.exports = (app, passport) => {
     
     //calificaciones
 	app.get('/university', (req, res) => {
-        // console.log('user',req.session.passport.user.nombre);
+        // Mostrar schedules para profesores
         if(req.isAuthenticated()) {
-            res.render('university', {
-                isAdmin: req.session.passport.user.is_administrator == true ? 2 : 1,
-                username: req.session.passport.user.username
+            const query = `SELECT professor_name, course_code, period, time_block, classroom, classroom_building FROM vw_Schedule WHERE professor_id = ${req.session.passport.user.professor_id}`;
+            sql.query(database.msurl, query, (err, rows) => {
+                if(err) {
+                    return alert('Database error.');
+                }
+                res.render('university', {
+                    isAdmin: req.session.passport.user.is_administrator == true ? 2 : 1,
+                    username: req.session.passport.user.username,
+                    rows: rows
+                });
             });
         } else {
-            const query = 'SELECT professor_name, course_code, period, time_block, classroom, classroom_building FROM vw_Schedule';
+            //Mostrar Schedules para usuarios no logeados
+            const query = 'SELECT professor_name, course_code, course_name, period, time_block, classroom, classroom_building FROM vw_Schedule';
             sql.query(database.msurl, query, (err, rows) => {
                 if(err) {
                     return alert('Database error.');
