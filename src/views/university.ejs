@@ -50,7 +50,10 @@
                             <%= schedule.classroom_building %>
                         </td>
                         <% if(isAdmin == 2) { %>
-                        <td class="column100 column8">edit</td>
+                        <td class="column100 column8">
+                            <span><i class="fas fa-edit"></i></span>
+                            <span><i class="fas fa-minus-circle"></i></span>
+                        </td>
                         <% } %>
                     </tr>
                     <% }) %>

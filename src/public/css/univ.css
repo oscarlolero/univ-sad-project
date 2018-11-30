@@ -1,6 +1,3 @@
-
-
-
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 * {
@@ -14,12 +11,12 @@ body, html {
   font-family: 'Lato', 'Arial', sans-serif;
   font-weight: 300;
   text-rendering: optimizeLegibility;
-	font-family: sans-serif;
+  font-size: 16px;
 }
 
 /* ------------------------------------ */
 a {
-	margin: 0px;
+  margin: 0px;
 	transition: all 0.4s;
 	-webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -128,9 +125,9 @@ nav li:hover {
   padding: 33px 30px;
 }
 
-.wrap-table100 {
+/* .wrap-table100 {
   width: 1300px;
-}
+} */
 
 /*//////////////////////////////////////////////////////////////////
 [ Table ]*/
@@ -154,6 +151,16 @@ th, td {
   padding-bottom: 14px;
 }
 
+.row100 span {
+  font-size: 18px;
+  color: #808080;
+  cursor: pointer;
+}
+
+.row100 span:last-child {
+  margin-left: 10px;
+}
+
 .principal .column100 {
   width: 150px;
   padding-left: 25px;
@@ -165,130 +172,12 @@ th, td {
 .principal .column5 {
   width: 240px;
 }
-
- /* CUSTOM */
-/* .principal .column8 {
-  width: 10px;
-  padding: 0px;
-}  */
-/*==================================================================
-[ Ver1 ]*/
-.table100.ver1 td {
-  font-family: Montserrat-Regular;
-  font-size: 14px;
-  color: #808080;
-  line-height: 1.4;
-}
-
-.table100.ver1 th {
-  font-family: Montserrat-Medium;
-  font-size: 12px;
-  color: #fff;
-  line-height: 1.4;
-  text-transform: uppercase;
-
-  background-color: #524c65;
-}
-
-.table100.ver1 .row100:hover {
-  background-color: #f2f2f2;
-}
-
-.table100.ver1 .hov-column-ver1 {
-  background-color: #f2f2f2;
-}
-
-.table100.ver1 .hov-column-head-ver1 {
-  background-color: #484848 !important;
-}
-
-.table100.ver1 .row100 td:hover {
-  background-color: #6c7ae0;
-  color: #fff;
+.principal .column8 {
+  text-align: center;
 }
 
 /*==================================================================
-[ Ver2 ]*/
-.table100.ver2 td {
-  font-family: Montserrat-Regular;
-  font-size: 14px;
-  color: #808080;
-  line-height: 1.4;
-}
-
-.table100.ver2 th {
-  font-family: Montserrat-Medium;
-  font-size: 12px;
-  color: #fff;
-  line-height: 1.4;
-  text-transform: uppercase;
-
-  background-color: #333333;
-}
-
-.table100.ver2 .row100:hover td {
-  background-color: #83d160;
-  color: #fff;
-}
-
-.table100.ver2 .hov-column-ver2 {
-  background-color: #83d160;
-  color: #fff;
-}
-
-.table100.ver2 .hov-column-head-ver2 {
-  background-color: #484848 !important;
-}
-
-.table100.ver2 .row100 td:hover {
-  background-color: #57b846;
-  color: #fff;
-}
-
-/*==================================================================
-[ Ver2 ]*/
-.table100.ver2 tbody tr:nth-child(even) {
-  background-color: #eaf8e6;
-}
-
-.table100.ver2 td {
-  font-family: Montserrat-Regular;
-  font-size: 14px;
-  color: #808080;
-  line-height: 1.4;
-}
-
-.table100.ver2 th {
-  font-family: Montserrat-Medium;
-  font-size: 12px;
-  color: #fff;
-  line-height: 1.4;
-  text-transform: uppercase;
-
-  background-color: #333333;
-}
-
-.table100.ver2 .row100:hover td {
-  background-color: #83d160;
-  color: #fff;
-}
-
-.table100.ver2 .hov-column-ver2 {
-  background-color: #83d160;
-  color: #fff;
-}
-
-.table100.ver2 .hov-column-head-ver2 {
-  background-color: #484848 !important;
-}
-
-.table100.ver2 .row100 td:hover {
-  background-color: #57b846;
-  color: #fff;
-}
-
-/*==================================================================
-[ Ver3 ]*/
+[ TABLE Ver3 ]*/
 .table100.ver3 th:first-child {
     border-top-left-radius: 10px;
 }
@@ -323,156 +212,4 @@ th, td {
 
 .table100.ver3 .hov-column-head-ver3 {
   background-color: rgba(106, 115, 180, 0.84) !important;
-}
-
-.table100.ver3 .row100 td:hover {
-  background-color: rgba(106, 115, 180, 0.84);
-  color: #fff;
-}
-
-/*==================================================================
-[ Ver4 ]*/
-
-.table100.ver4 td {
-  font-family: Montserrat-Regular;
-  font-size: 14px;
-  color: #808080;
-  line-height: 1.4;
-}
-
-.table100.ver4 th {
-  font-family: Montserrat-Medium;
-  font-size: 12px;
-  color: #fff;
-  line-height: 1.4;
-  text-transform: uppercase;
-
-  background-color: #e08189;
-}
-
-.table100.ver4 .row100:hover td {
-  color: #fa4251;
-}
-
-.table100.ver4 .hov-column-ver4 {
-  background-color: #ffebed;
-}
-
-.table100.ver4 .hov-column-head-ver4 {
-  background-color: #f95462 !important;
-}
-
-.table100.ver4 .row100 td:hover {
-  background-color: #ffebed;
-  color: #fa4251;
-}
-
-/*==================================================================
-[ Ver5 ]*/
-.table100.ver5 tbody tr:nth-child(even) {
-  background-color: #e9faff;
-}
-
-.table100.ver5 td {
-  font-family: Montserrat-Regular;
-  font-size: 14px;
-  color: #808080;
-  line-height: 1.4;
-  position: relative;
-}
-
-.table100.ver5 th {
-  font-family: Montserrat-Medium;
-  font-size: 12px;
-  color: #fff;
-  line-height: 1.4;
-  text-transform: uppercase;
-
-  background-color: #002933;
-}
-
-.table100.ver5 .row100:hover td {
-  color: #fe3e64;
-}
-
-.table100.ver5 .hov-column-ver5 {color: #fe3e64;}
-.table100.ver5 .hov-column-ver5::before {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  border-left: 1px solid #f2f2f2;
-  border-right: 1px solid #f2f2f2;
-}
-
-.table100.ver5 .hov-column-head-ver5 {
-  background-color: #1a3f48 !important;
-  color: #fe3e64;
-}
-
-.table100.ver5 .row100 td:hover {
-  color: #fe3e64;
-}
-
-.table100.ver5 .row100 td:hover:before {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  border: 1px solid #fe3e64;
-}
-
-/*==================================================================
-[ Ver6 ]*/
-
-.table100.ver6 {
-  border-radius: 16px;
-  overflow: hidden;
-  background: #b78ceb;
-  background: -webkit-linear-gradient(-68deg, #ac32e4 , #4801ff);
-  background: -o-linear-gradient(-68deg, #ac32e4 , #4801ff);
-  background: -moz-linear-gradient(-68deg, #c591dd , #9871ff);
-  background: linear-gradient(-68deg, #c591dd , #9871ff);
-}
-
-.table100.ver6 table {
-  background-color: transparent;
-}
-
-.table100.ver6 td {
-  font-family: Montserrat-Regular;
-  font-size: 14px;
-  color: #fff;
-  line-height: 1.4;
-}
-
-.table100.ver6 th {
-  font-family: Montserrat-Medium;
-  font-size: 12px;
-  color: #fff;
-  line-height: 1.4;
-  text-transform: uppercase;
-
-  background-color: rgba(255,255,255,0.32);
-}
-
-.table100.ver6 .row100:hover td {
-  background-color: rgba(255,255,255,0.1);
-}
-
-.table100.ver6 .hov-column-ver6 {
-  background-color: rgba(255,255,255,0.1);
-}
-
-
-.table100.ver6 .row100 td:hover {
-  background-color: rgba(255,255,255,0.2);
 }
