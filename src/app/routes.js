@@ -1,6 +1,5 @@
 const sql = require("msnodesqlv8");
 
-const database = require('./database');
 
 module.exports = (app, passport) => {
 

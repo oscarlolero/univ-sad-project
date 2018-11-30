@@ -1,4 +1,10 @@
+let socket = io();
 
+socket.on('connect', () => {
+	console.log('Conectado');
+});
+
+//TABLE
 (function ($) {
 	"use strict";
 	$('.column100').on('mouseover',function(){

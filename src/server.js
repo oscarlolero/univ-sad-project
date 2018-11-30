@@ -1,6 +1,7 @@
 //https://www.youtube.com/watch?v=FtlZQUZiQ1g
+const http = require('http');
 const express = require('express');
-const app = express();
+const socketIO = require('socket.io');
 
 const morgan = require('morgan');
 const path = require('path');
@@ -10,6 +11,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const sql = require("msnodesqlv8");
+
+let app = express();
+let server = http.createServer(app);
+let io = socketIO(server);
 
 const db = require('./config/database.js');
 
@@ -29,7 +34,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 //middlewares
-app.use(morgan('dev')); //ver requests de http por consola
+// app.use(morgan('dev')); //ver requests de http por consola
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false})); //informacion que reciba de los formularios los voya poder inmtepretar en el url
 app.use(session({
@@ -47,11 +52,14 @@ require('./app/routes.js')(app, passport); //parametros
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+io.on('connection', (socket) => {//registrar eventlistener
+    console.log('Client connected.');
+});
 // Handle 404 - Keep this as a last route
 // app.use((req, res) => {
 //     res.redirect('/');
 // });
 
-app.listen(app.get('port'), () => {
+server.listen(app.get('port'), () => {
     console.log('Server encendido en puerto', app.get('port'));
 });

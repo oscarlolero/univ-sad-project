@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const sql = require("msnodesqlv8");
 
-const database = require('./database');
+const database = require('./database.js');
 module.exports = function(passport) {
     // required for persistent login sessions
     // passport needs ability to serialize and unserialize users out of session
