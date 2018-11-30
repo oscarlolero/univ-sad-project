@@ -2,8 +2,17 @@
 <nav>
         <% if(isAdmin == 2) { %>
         <ul class="admin-nav">
-            <li>Edit</li>
-            <li>Professors</li>
+            <li>Administration
+                <ul class="submenu">
+                    <li onclick="location.href = '/departments'">Departments</li>
+                    <li onclick="location.href = '/departments'">Professors</li>
+                    <li onclick="location.href = '/departments'">Courses</li>
+                    <li onclick="location.href = '/departments'">Periods</li>
+                    <li onclick="location.href = '/departments'">Time blocks</li>
+                    <li onclick="location.href = '/departments'">Classrooms</li>
+                    <li onclick="location.href = '/departments'">Schedules</li>
+                </ul>
+            </li>
         </ul>
         <ul class="main-nav">
                 <li>Professor: <%= username %></li>
