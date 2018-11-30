@@ -35,7 +35,7 @@ module.exports = (app, passport) => {
 	app.get('/university', (req, res) => {
         // Mostrar schedules para profesores
         if(req.isAuthenticated()) {
-            const query = `SELECT professor_name, course_code, period, time_block, classroom, classroom_building FROM vw_Schedule WHERE professor_id = ${req.session.passport.user.professor_id}`;
+            const query = `SELECT professor_name, course_code, course_name, period, time_block, classroom, classroom_building FROM vw_Schedule WHERE professor_id = ${req.session.passport.user.professor_id}`;
             sql.query(database.msurl, query, (err, rows) => {
                 if(err) {
                     return alert('Database error.');
