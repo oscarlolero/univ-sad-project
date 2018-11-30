@@ -20,9 +20,6 @@
                         <th class="column100 column5">Time block</th>
                         <th class="column100 column6">Classroom</th>
                         <th class="column100 column7">Building</th>
-                        <% if(isAdmin == 2) { %>
-                        <th class="column100 column8">Action</td>
-                            <% } %>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,19 +46,12 @@
                         <td class="column100 column7">
                             <%= schedule.classroom_building %>
                         </td>
-                        <% if(isAdmin == 2) { %>
-                        <td class="column100 column8">
-                            <span><i class="fas fa-edit"></i></span>
-                            <span><i class="fas fa-minus-circle"></i></span>
-                        </td>
-                        <% } %>
                     </tr>
                     <% }) %>
                 </tbody>
             </table>
         </div>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
     <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
     <script src="vendor/bootstrap/js/popper.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>

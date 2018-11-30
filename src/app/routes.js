@@ -31,7 +31,7 @@ module.exports = (app, passport) => {
         res.redirect('/university');
 	}); 
     
-    //calificaciones
+    //UNIVERSITY PRINCIPAL
 	app.get('/university', (req, res) => {
         // Mostrar schedules para profesores
         if(req.isAuthenticated()) {
@@ -60,10 +60,27 @@ module.exports = (app, passport) => {
             });
         }
     });
+
+    //EDIT DEPARTMENTS
+    app.get('/departments', isLoggedIn, (req, res) => {
+        const query = `SELECT department_id, descr FROM department`;
+        sql.query(database.msurl, query, (err, rows) => {
+            if(err) {
+                return alert('Database error.');
+            }
+            res.render('departments', {
+                isAdmin: req.session.passport.user.is_administrator == true ? 2 : 1,
+                username: req.session.passport.user.username,
+                rows: rows
+            });
+        });
+    });
 };
 
 function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) { //mehtodo de passport
         return next();
+    } else {
+        res.redirect('/university');
     }
 }

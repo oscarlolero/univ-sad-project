@@ -175,7 +175,7 @@ th, td {
   margin-left: 10px;
 }
 
-.principal .column100 {
+.column100 {
   width: 150px;
   padding-left: 25px;
 }
@@ -186,10 +186,22 @@ th, td {
 .principal .column5 {
   width: 240px;
 }
-.principal .column8 {
+.columnAction {
   text-align: center;
 }
 
+.departments table {
+  width: auto;
+}
+
+.departments {
+  display: flex;
+  justify-content: center;
+}
+
+.departments .column1 {
+  width: 240px;
+}
 /*==================================================================
 [ TABLE Ver3 ]*/
 .table100.ver3 th:first-child {

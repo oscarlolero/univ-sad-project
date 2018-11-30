@@ -1,8 +1,8 @@
-let socket = io();
+// let socket = io();
 
-socket.on('connect', () => {
-	console.log('Conectado');
-});
+// socket.on('connect', () => {
+// 	console.log('Conectado');
+// });
 
 //TABLE
 (function ($) {
