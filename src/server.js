@@ -52,13 +52,13 @@ require('./app/routes.js')(app, passport); //parametros
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-io.on('connection', (socket) => {//registrar eventlistener
-    console.log('Client connected.');
-});
+//sockets
+require('./app/sockets.js')(io, passport);
+
 // Handle 404 - Keep this as a last route
-// app.use((req, res) => {
-//     res.redirect('/');
-// });
+app.use((req, res) => {
+    res.redirect('/university');
+});
 
 server.listen(app.get('port'), () => {
     console.log('Server encendido en puerto', app.get('port'));

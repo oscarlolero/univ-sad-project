@@ -1,5 +1,4 @@
 const sql = require("msnodesqlv8");
-
 const database = require('../config/database');
 
 module.exports = (app, passport) => {
@@ -75,6 +74,7 @@ module.exports = (app, passport) => {
             });
         });
     });
+
 };
 
 function isLoggedIn(req, res, next) {
