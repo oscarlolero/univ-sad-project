@@ -6,22 +6,42 @@ socket.on('connect', () => {
 
 document.querySelector('.btn-add').addEventListener('click', e => {
     const type = document.querySelector('.js_global_container').dataset.type;
-    const fields = document.querySelector('.modal-body') //.childElementCount
+    const fields = document.querySelector('.insert-modal .modal-body'); //.childElementCount
     
     let fieldsArray = [];
     for(let i = 0; i < fields.childElementCount; i++) {
         fieldsArray.push(document.getElementById(`field${i+1}`).value);
     }
-
+    console.log(fieldsArray);
     socket.emit('insertRow', {
         type,
         fieldsArray
     }, (msg) => {
         location.reload();
+        $('#addModal').modal('hide');
     });
-
-    $('#addModal').modal('hide');
 });
+
+document.querySelector('.btn-edit').addEventListener('click', e => {
+    console.log('pressed');
+    const type = document.querySelector('.js_global_container').dataset.type;
+    const fields = document.querySelector('.edit-modal .modal-body') //.childElementCount
+    
+    let fieldsArray = [];
+    for(let i = 0; i < fields.childElementCount; i++) {
+        fieldsArray.push(document.getElementById(`efield${i+1}`).value);
+    }
+
+    socket.emit('updateRow', {
+        type,
+        fieldsArray,
+        id: document.querySelector('.edit-modal').dataset.js_edit_id
+    }, (msg) => {
+        location.reload();
+        $('#editModal').modal('hide');
+    });
+});
+
 document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener('click', e => {
 	
 	const process = e.target.closest('span').dataset.process.split('-');
@@ -38,9 +58,15 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
 		});
 	} else if(process[0] === 'edit') {
 
-		console.log('EDIT');
-	} else {
+        const cols = document.querySelector(`[data-process="edit-${process[1]}"]`).parentElement.parentElement;
 
+        for(let i = 0; i < cols.childElementCount - 1; i++) {
+            const actualCol = document.getElementById(`efield${i+1}`);
+            actualCol.value = cols.children[i].textContent.trim();
+            actualCol.classList.add('has-val');
+        }
+        document.querySelector('.edit-modal').dataset.js_edit_id = process[1];
+	} else {
 		console.log('Error processing click action.');
 	}
 }));
