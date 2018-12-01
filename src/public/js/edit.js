@@ -6,13 +6,37 @@ socket.on('connect', () => {
 
 document.querySelector('.btn-add').addEventListener('click', e => {
     const type = document.querySelector('.js_global_container').dataset.type;
-    const fields = document.querySelector('.insert-modal .modal-body'); //.childElementCount
-    
+    // const fields = document.querySelector('.insert-modal .modal-body'); //.childElementCount
+    let numInputElements;
     let fieldsArray = [];
-    for(let i = 0; i < fields.childElementCount; i++) {
+
+    switch (type) {
+        case 'departments': {
+            numInputElements = 1;
+        break
+        }
+
+        case 'professors': {
+            numInputElements = 4;
+            //Leer departamento
+            fieldsArray.push(parseInt(document.querySelector('.input100-select').value));
+            //Leer si es admin
+            if(document.querySelector('.btn-group-toggle').children[1].classList.contains('active')) {
+                fieldsArray.push(1);
+            } else {
+                fieldsArray.push(0);
+            }
+       break;
+        }
+
+        default: return console.log('Error at processing container type.');
+        break;
+    }
+
+    for(let i = 0; i < numInputElements; i++) {
         fieldsArray.push(document.getElementById(`field${i+1}`).value);
     }
-    console.log(fieldsArray);
+
     socket.emit('insertRow', {
         type,
         fieldsArray
@@ -23,15 +47,40 @@ document.querySelector('.btn-add').addEventListener('click', e => {
 });
 
 document.querySelector('.btn-edit').addEventListener('click', e => {
-    console.log('pressed');
     const type = document.querySelector('.js_global_container').dataset.type;
     const fields = document.querySelector('.edit-modal .modal-body') //.childElementCount
-    
+       
+    let numInputElements;
     let fieldsArray = [];
-    for(let i = 0; i < fields.childElementCount; i++) {
+
+    switch (type) {
+        case 'departments': {
+            numInputElements = 1;
+        break
+        }
+
+        case 'professors': {
+            numInputElements = 4;
+            //Leer departamento
+            fieldsArray.push(parseInt($('.input100-select-edit').find(':selected').data('dep_id')));
+            //Leer si es admin
+            if(document.querySelector('.edit-modal .btn-group-toggle').children[1].classList.contains('active')) {
+                fieldsArray.push(1);
+            } else {
+                fieldsArray.push(0);
+            }
+       break;
+        }
+
+        default: return console.log('Error at processing container type.');
+        break;
+    }
+
+    for(let i = 0; i < numInputElements; i++) {
         fieldsArray.push(document.getElementById(`efield${i+1}`).value);
     }
 
+    console.log(fieldsArray);
     socket.emit('updateRow', {
         type,
         fieldsArray,
@@ -44,7 +93,9 @@ document.querySelector('.btn-edit').addEventListener('click', e => {
 
 document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener('click', e => {
 	
-	const process = e.target.closest('span').dataset.process.split('-');
+    const process = e.target.closest('span').dataset.process.split('-');
+    document.querySelector('.edit-modal').dataset.js_edit_id = process[1];
+
 	if(process[0] === 'delete') {
 		const type = document.querySelector('.js_global_container').dataset.type;
 		const item = document.querySelector(`[data-process="delete-${process[1]}"]`);
@@ -59,13 +110,71 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
 	} else if(process[0] === 'edit') {
 
         const cols = document.querySelector(`[data-process="edit-${process[1]}"]`).parentElement.parentElement;
+        const type = document.querySelector('.js_global_container').dataset.type;
+    
+        switch (type) {
+            case 'departments': {
+                const selector = document.getElementById('efield1');
+                selector.value = cols.children[0].textContent.trim();
+                selector.classList.add('has-val');
+            break
+            }
+    
+            case 'professors': {
+                //Get list of departments and select the actual department
+                const selectSelector = document.querySelector('.input100-select-edit');
+                socket.emit('getDepartments', {
+                }, (departments) => {
+                    while (selectSelector.firstChild) {
+                        selectSelector.removeChild(selectSelector.firstChild);
+                    } 
+                    let markup = '';
+                    departments.forEach((e, index) => {
+                        markup = markup.concat(`<option value="${index}" data-dep_id="${e.department_id}">${e.descr}</option>`);
+                    });
+                    selectSelector.insertAdjacentHTML('beforeend', markup);
 
-        for(let i = 0; i < cols.childElementCount - 1; i++) {
-            const actualCol = document.getElementById(`efield${i+1}`);
-            actualCol.value = cols.children[i].textContent.trim();
-            actualCol.classList.add('has-val');
+                    for(let i = 0; i <= selectSelector.childElementCount - 1; i++) {
+                        if(cols.children[1].textContent == selectSelector.children[i].textContent) {
+                            selectSelector.value = i;
+                        }
+                    }
+                });
+
+                //Get inputs
+                //Get first and last name   
+                socket.emit('getProfessorName', {
+                    professor_id: document.querySelector('.edit-modal').dataset.js_edit_id
+                }, (professorRow) => {
+                    const [fistNameField, lastNameField] = [document.getElementById('efield1'), document.getElementById('efield2')];
+                    fistNameField.value = professorRow[0].first_name;
+                    lastNameField.value = professorRow[0].last_name;
+                    fistNameField.classList.add('has-val');
+                    lastNameField.classList.add('has-val');
+                });
+
+                //Get username and password
+                const [usernameField, passwordField] = [document.getElementById('efield3'), document.getElementById('efield4')];
+                usernameField.value = cols.children[2].textContent.trim();
+                passwordField.value = cols.children[3].textContent.trim();
+                usernameField.classList.add('has-val');
+                passwordField.classList.add('has-val');
+
+                //Select if is admin or not
+                const isAdminSelector = document.querySelector('.edit-modal .btn-group-toggle');
+                if(cols.children[4].textContent.trim() === 'Yes') {
+                    isAdminSelector.children[0].classList.remove('active');
+                    isAdminSelector.children[1].classList.add('active');
+                } else {
+                    isAdminSelector.children[0].classList.add('active');
+                    isAdminSelector.children[1].classList.remove('active');            
+                }
+            break;
+            }
+    
+            default: return console.log('Error at processing container type.');
+            break;
         }
-        document.querySelector('.edit-modal').dataset.js_edit_id = process[1];
 	} else {
 		console.log('Error processing click action.');
 	}
@@ -120,7 +229,7 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
     [ Validate ]*/
     var input = $('.validate-input .input100');
 
-    $('.validate-form').on('submit',function(){
+    $('.btn-validate').on('click',function(){
         var check = true;
 
         for(var i=0; i<input.length; i++) {

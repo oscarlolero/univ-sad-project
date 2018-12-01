@@ -157,11 +157,13 @@ GO
 
 CREATE VIEW vw_Professor AS
 SELECT	p.professor_id,
-		p.first_name+' '+last_name AS name, 
+		p.first_name,
+		p.last_name, 
 		p.department_id,
 		d.descr AS department_descr,
 		p.username,
-		p.user_pass
+		p.user_pass,
+		P.is_administrator
 FROM professor p, department d
 WHERE p.department_id=d.department_id;
 GO
@@ -185,7 +187,7 @@ SELECT s.schedule_id,
 		s.period_id,
 		s.time_block_id,
 		s.classroom_id,
-		prof.name AS professor_name,
+		prof.first_name +' '+prof.last_name AS professor_name,
 		c.code AS course_code,
 		c.descr AS course_name,
 		p.descr AS period,

@@ -214,6 +214,16 @@ thead i:hover {
 .departments .column1 {
   width: 240px;
 }
+
+.professors .column1,
+.professors .column2,
+.professors .column3,
+.professors .column4 {
+  width: 240px;
+}
+.professors .columnAction {
+  width: 50px;
+}
 /*==================================================================
 [ TABLE Ver3 ]*/
 .table100.ver3 th:first-child {
@@ -274,7 +284,7 @@ thead i:hover {
   transition: all 0.5s ease;
 }
 
-.wrap-input100 {
+.wrap-input100:not(.select-wrap) {
   width: 100%;
   position: relative;
   border-bottom: 2px solid #d9d9d9;
@@ -292,6 +302,20 @@ thead i:hover {
   padding: 0 5px;
 }
 
+.input100-select,
+.input100-select-edit {
+
+  width: 100%;
+  position: relative;
+  padding: 7px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+.input100-select:focus,
+.input100-select-edit:focus {
+  outline: none;
+}
 /*---------------------------------------------*/ 
 .focus-input100 {
   position: absolute;

@@ -41,7 +41,7 @@ module.exports = (app, passport) => {
                 }
                 res.render('university', {
                     isAdmin: req.session.passport.user.is_administrator == true ? 2 : 1,
-                    username: req.session.passport.user.username,
+                    username: `${req.session.passport.user.first_name} ${req.session.passport.user.last_name}`,
                     rows: rows
                 });
             });
@@ -50,7 +50,7 @@ module.exports = (app, passport) => {
             const query = 'SELECT professor_name, course_code, course_name, period, time_block, classroom, classroom_building FROM vw_Schedule';
             sql.query(database.msurl, query, (err, rows) => {
                 if(err) {
-                    return alert('Database error.');
+                    return console.log('Database error.', err);
                 }
                 res.render('university', {
                     isAdmin: 0,
@@ -65,12 +65,40 @@ module.exports = (app, passport) => {
         const query = `SELECT department_id, descr FROM department`;
         sql.query(database.msurl, query, (err, rows) => {
             if(err) {
-                return alert('Database error.');
+                return console.log('Database error.', err);
             }
             res.render('departments', {
                 isAdmin: req.session.passport.user.is_administrator == true ? 2 : 1,
-                username: req.session.passport.user.username,
+                username: `${req.session.passport.user.first_name} ${req.session.passport.user.last_name}`,
                 rows: rows
+            });
+        });
+    });    
+    //EDIT PROFESSORS
+    app.get('/professors', isLoggedIn, (req, res) => {
+        let query = `SELECT professor_id, first_name + ' ' + last_name AS name, department_descr, username, user_pass, is_administrator FROM vw_Professor`;
+        let data = {};
+        
+        //GET PROFESSORS
+        sql.query(database.msurl, query, (err, professors) => {
+            if(err) {
+                return console.log('Database error.', err);
+            }
+            data.professors = professors;
+
+            //GET DEPARTMENTS FOR DROPDOWNLIST
+            query = `SELECT department_id, descr FROM department`;
+            sql.query(database.msurl, query, (err, departments) => {
+                if(err) {
+                    return console.log('Database error.', err);
+                }
+                data.departments = departments;
+                // console.log(JSON.stringify(data, null, 4));
+                res.render('professors', {
+                    isAdmin: req.session.passport.user.is_administrator == true ? 2 : 1,
+                    username: `${req.session.passport.user.first_name} ${req.session.passport.user.last_name}`,
+                    data: data
+                });
             });
         });
     });
