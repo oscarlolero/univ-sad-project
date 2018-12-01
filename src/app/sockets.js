@@ -16,9 +16,27 @@ module.exports = io => {
             }
             sql.query(database.msurl, query, (err, rows) => {
                 if(err) {
-                    return alert('Database error.');
+                    return console.log('Database error.', err);
                 }
                 callback();
+            });
+        });
+
+        socket.on('insertRow', (params, callback) => {
+            let query;
+
+            switch(params.type) {
+                case 'departments': query = `INSERT INTO department(descr) VALUES('${params.fieldsArray[0]}')`;
+                break;
+
+                default: alert('Invalid query at insertRow socket.');
+                break;
+            }
+            sql.query(database.msurl, query, (err, rows) => {
+                if(err) {
+                    return console.log('Database error.', err);
+                }
+                callback('Department added.');
             });
         });
     }); 

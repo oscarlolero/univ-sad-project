@@ -13,7 +13,7 @@
             <table data-vertable="ver3">
                 <thead>
                     <tr class="row100 head">
-                        <th class="column100 column1">Department</th>
+                        <th class="column100 column1">Department <span title="Add department"data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i></span></th>
                         <th class="column100 columnAction">Action</td>
                     </tr>
                 </thead>
@@ -24,13 +24,37 @@
                             <%= department.descr %>
                         </td>
                         <td class="column100 columnAction">
-                            <span data-process="edit-<%= department.department_id %>" title="Edit"><i class="fas fa-edit"></i></span>
-                            <span data-process="delete-<%= department.department_id %>" title="Delete"><i class="fas fa-minus-circle"></i></span>
+                            <span data-process="edit-<%= department.department_id %>" title="Edit department"><i class="fas fa-edit"></i></span>
+                            <span data-process="delete-<%= department.department_id %>" title="Delete department"><i class="fas fa-minus-circle"></i></span>
                         </td>
                     </tr>
                     <% }) %>
                 </tbody>
             </table>
+        </div>
+    </div>
+        <!-- Modal -->
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add department</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body m-t-20">
+                    <div class="wrap-input100 validate-input" data-validate="Password missing">
+                        <input class="input100" id="field1" type="text">
+                        <span class="focus-input100" data-placeholder="Name of department"></span>
+                    </div>                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-add">Add</button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
