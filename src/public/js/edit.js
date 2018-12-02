@@ -41,7 +41,7 @@ document.querySelector('.btn-add').addEventListener('click', () => {
 
         case 'timeblocks': {
             numInputElements = 0;
-            let [field1, field2] = [document.getElementById(`field1`), document.getElementById(`field2`)]
+            let [field1, field2] = [document.getElementById(`field1`), document.getElementById(`field2`)];
             fieldsArray.push(getBlockMins(field1.value));
             fieldsArray.push(getDaysAWeekBooleans(field2.value));
             fieldsArray.push(`${field1.value} ${getDaysAWeek(...getDaysAWeekBooleans(field2.value))}`);
@@ -104,8 +104,10 @@ document.querySelector('.btn-edit').addEventListener('click', () => {
 
         case 'timeblocks': {
             numInputElements = 0;
-            fieldsArray.push(getBlockMins(document.getElementById(`efield1`).value));
-            fieldsArray.push(getDaysAWeekBooleans(document.getElementById(`efield2`).value));
+            let [field1, field2] = [document.getElementById(`efield1`), document.getElementById(`efield2`)];
+            fieldsArray.push(getBlockMins(field1.value));
+            fieldsArray.push(getDaysAWeekBooleans(field2.value));
+            fieldsArray.push(`${field1.value} ${getDaysAWeek(...getDaysAWeekBooleans(field2.value))}`);
             break;
         }
         default: return console.log('Error at processing container type.');

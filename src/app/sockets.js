@@ -100,7 +100,8 @@ module.exports = io => {
                 }
 
                 case 'timeblocks' : {
-                    query = `UPDATE time_block SET begin_minute = ${params.fieldsArray[0][0]}, end_minute = ${params.fieldsArray[0][1]}, 
+                    query = `UPDATE time_block SET begin_minute = ${params.fieldsArray[0][0]}, end_minute = ${params.fieldsArray[0][1]},
+                    descr = '${params.fieldsArray[2]}',
                     Monday = ${params.fieldsArray[1][0]}, 
                     Tuesday = ${params.fieldsArray[1][1]}, 
                     Wednesday = ${params.fieldsArray[1][2]},
