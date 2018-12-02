@@ -5,6 +5,8 @@ module.exports = io => {
     io.on('connection', (socket, passport) => {//registrar eventlistener
         console.log('Client connected.');
 
+        //OPERATION SOCKETS (UPDATE, DELETE, INSERT)
+
         socket.on('deleteRow', (params, callback) => {
             let query;
             switch(params.type) {
@@ -21,6 +23,9 @@ module.exports = io => {
                 break;
 
                 case 'timeblocks': query = `DELETE FROM time_block WHERE time_block_id=${params.id}`;
+                break;
+
+                case 'classrooms': query = `DELETE FROM classroom WHERE classroom_id=${params.id}`;
                 break;
 
                 default: console.log('Invalid query at deleteRow socket.');
@@ -68,10 +73,19 @@ module.exports = io => {
                     break;
                 }
 
+                case 'classrooms': query = `INSERT INTO classroom(descr, seat_count, has_projector, building) 
+                    VALUES(
+                        '${parseInt(params.fieldsArray[1])}', 
+                        '${parseInt(params.fieldsArray[2])}', 
+                        ${parseInt(params.fieldsArray[0])}, 
+                        '${params.fieldsArray[3]}'
+                    )`;
+                break;
+
                 default: console.log('Invalid query at insertRow socket.');
                 break;
             }
-            // console.log(query);
+            console.log(query);
             sql.query(database.msurl, query, (err, rows) => {
                 if(err) {
                     return console.log('Database error.', err);
@@ -111,9 +125,14 @@ module.exports = io => {
                     break;
                 }
 
+                case 'classrooms' : {
+                    query = `UPDATE classroom SET descr = ${parseInt(params.fieldsArray[1])}, seat_count = ${parseInt(params.fieldsArray[2])}, has_projector = ${params.fieldsArray[0]}, building = '${params.fieldsArray[3]}' WHERE classroom_id = ${params.id}`;
+                    break;
+                }
                 default: console.log('Invalid query at updateRow socket.');
                 break;
             }
+            console.log(query);
             sql.query(database.msurl, query, (err, rows) => {
                 if(err) {
                     return console.log('Database error.', err);

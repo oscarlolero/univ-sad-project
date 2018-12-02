@@ -264,6 +264,17 @@ thead i:hover {
 .timeblocks .column2 {
   width: 280px;
 }
+
+.classrooms .column1,
+.classrooms .column2,
+.classrooms .column3 {
+  width: 230px;
+}
+
+.classrooms {
+  display: flex;
+  justify-content: center;
+}
 /*==================================================================
 [ TABLE Ver3 ]*/
 .table100.ver3 th:first-child {
@@ -381,6 +392,9 @@ thead i:hover {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 
+}
+
+:not(.custom).focus-input100::before {
   background: #6a73b4;
 }
 
@@ -403,20 +417,28 @@ thead i:hover {
   transition: all 0.4s;
 }
 
-.input100:focus + .focus-input100::after {
+.input100:focus + .focus-input100::after,
+.custom-input:focus + .focus-input100::after {
   top: -20px;
   font-size: 15px;
 }
 
-.input100:focus + .focus-input100::before {
+.input100:focus + .focus-input100::before,
+.custom-input:focus + .focus-input100::before {
   width: 100%;
 }
 
-.has-val.input100 + .focus-input100::after {
+.has-val.input100 + .focus-input100::after,
+.has-val.custom-input + .focus-input100::after {
   top: -20px;
   font-size: 15px;
 }
 
-.has-val.input100 + .focus-input100::before {
+.has-val.input100 + .focus-input100::before,
+.has-val.custom-input + .focus-input100::before {
   width: 100%;
+}
+
+.custom {
+  top: -10px;
 }

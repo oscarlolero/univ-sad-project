@@ -29,12 +29,7 @@
                         <td class="column100 column3"><%= professor.username %></td>
                         <td class="column100 column4"><%= professor.user_pass %></td>
                         <td class="column100 column5">
-                            <% if(professor.is_administrator) { %>
-                                Yes
-                            <% } %>
-                            <% if(!professor.is_administrator) { %>
-                                No
-                            <% } %>
+                            <%= professor.is_administrator ? 'Yes' : 'No' %>
                         </td>
                         <td class="column100 columnAction">
                             <span data-process="edit-<%= professor.professor_id %>" title="Edit professor" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></span>
@@ -133,14 +128,15 @@
                             <span class="focus-input100" data-placeholder="Password"></span>
                         </div>
                         <div class="wrap-input100 select-wrap m-b-10">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <div class="btn-group btn-group-toggle m-t-20" data-toggle="buttons">
                                 <label class="btn btn-secondary active">
-                                  <input type="radio" name="options2" id="option3" autocomplete="off" checked> No
+                                  <input type="radio" name="options2" id="option3" autocomplete="off" class="custom-input has-val" checked > No
+                                  <span class="focus-input100 custom" data-placeholder="Administrator"></span>
                                 </label>
                                 <label class="btn btn-secondary">
                                   <input type="radio" name="options2" id="option4" autocomplete="off"> Yes
-                                </label>
-                              </div>
+                                </label> 
+                            </div>  
                         </div>
                     </div>
                     <div class="modal-footer">

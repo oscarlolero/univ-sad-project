@@ -26,7 +26,7 @@ document.querySelector('.btn-add').addEventListener('click', () => {
             } else {
                 fieldsArray.push(0);
             }
-       break;
+        break;
         }
 
         case 'courses': {
@@ -49,6 +49,16 @@ document.querySelector('.btn-add').addEventListener('click', () => {
         }
         break;
         
+        case 'classrooms': {
+            numInputElements = 3;
+            if(document.querySelector('.btn-group-toggle').children[1].classList.contains('active')) {
+                fieldsArray.push(1);
+            } else {
+                fieldsArray.push(0);
+            }
+       break;
+        }
+
         default: return console.log('Error at processing container type.');
         break;
     }
@@ -57,6 +67,7 @@ document.querySelector('.btn-add').addEventListener('click', () => {
         fieldsArray.push(document.getElementById(`field${i+1}`).value);
     }
 
+    console.log(fieldsArray);
     socket.emit('insertRow', {
         type,
         fieldsArray
@@ -110,6 +121,18 @@ document.querySelector('.btn-edit').addEventListener('click', () => {
             fieldsArray.push(`${field1.value} ${getDaysAWeek(...getDaysAWeekBooleans(field2.value))}`);
             break;
         }
+
+        case 'classrooms': {
+            numInputElements = 3;
+
+            if(document.querySelector('.edit-modal .btn-group-toggle').children[1].classList.contains('active')) {
+                fieldsArray.push(1);
+            } else {
+                fieldsArray.push(0);
+            }
+            break;
+        }
+
         default: return console.log('Error at processing container type.');
         break;
     }
@@ -143,7 +166,7 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
 			type,
 			id: process[1]
 		}, () => {
-			// console.log('Socket emited');
+			// console.log('Deleted');
 		});
 	} else if(process[0] === 'edit') {
 
@@ -236,6 +259,33 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
                 daysAWeekSelector.value = cols.children[1].textContent.trim();
                 timeblockSelector.classList.add('has-val');
                 daysAWeekSelector.classList.add('has-val');
+            break;
+            }
+
+            case 'classrooms': {
+                const [classroomSelector, seatcountSelector, hasproyectorSelector, buildingSelector] = [
+                    document.getElementById('efield1'), 
+                    document.getElementById('efield2'), 
+                    document.querySelector('.edit-modal .btn-group-toggle'),
+                    document.getElementById('efield3')
+                ];
+
+                classroomSelector.value = cols.children[0].textContent.trim();
+                seatcountSelector.value = cols.children[1].textContent.trim();
+                hasproyectorSelector.value = cols.children[2].textContent.trim();
+                buildingSelector.value = cols.children[3].textContent.trim();
+
+                if(cols.children[2].textContent.trim() === 'Yes') {
+                    hasproyectorSelector.children[0].classList.remove('active');
+                    hasproyectorSelector.children[1].classList.add('active');
+                } else {
+                    hasproyectorSelector.children[0].classList.add('active');
+                    hasproyectorSelector.children[1].classList.remove('active');            
+                }
+
+                classroomSelector.classList.add('has-val');
+                seatcountSelector.classList.add('has-val');
+                buildingSelector.classList.add('has-val');
             break;
             }
 

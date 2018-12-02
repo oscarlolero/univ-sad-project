@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>University classrooms</title>
+    <% include partials/head %>
+</head>
+
+<body>
+    <% include partials/nav %>
+    <div class="classrooms js_global_container" data-type="classrooms">
+        <div class="table100 ver3 m-t-30">
+            <table data-vertable="ver3">
+                <thead>
+                    <tr class="row100 head">
+                        <th class="column100 column1">Classroom <span title="Add classroom" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i></span></th>
+                        <th class="column100 column2">Seat count</th>
+                        <th class="column100 column3">Has projector</th>
+                        <th class="column100 column4">Building</th>
+                        <th class="column100 columnAction">Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% rows.forEach(function(classroom) { %>
+                    <tr class="row100">
+                        <td class="column100 column1">
+                            <%= classroom.descr %>
+                        </td>
+                        <td class="column100 column2">
+                            <%= classroom.seat_count %>
+                        </td>
+                        <td class="column100 column3">
+                            <%= classroom.has_projector ? 'Yes' : 'No' %>
+                        </td>
+                        <td class="column100 column4">
+                            <%= classroom.building %>
+                        </td>
+                        <td class="column100 columnAction">
+                            <span data-process="edit-<%= classroom.classroom_id %>" title="Edit classroom" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></span>
+                            <span data-process="delete-<%= classroom.classroom_id %>" title="Delete classroom"><i class="fas fa-minus-circle"></i></span>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Insert modal -->
+    <div class="insert-modal" data-js_edit_id="-1">
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add classroom</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body m-t-20">
+                        <div class="wrap-input100 validate-input m-b-40" data-validate="Password missing">
+                            <input class="input100" id="field1" type="number">
+                            <span class="focus-input100" data-placeholder="Classroom"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input m-b-53" data-validate="Password missing">
+                            <input class="input100" id="field2" type="number">
+                            <span class="focus-input100" data-placeholder="Seat count"></span>
+                        </div>
+                        <div class="wrap-input100 select-wrap m-b-40">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" name="options3" id="option1" autocomplete="off" class="custom-input has-val" checked> No
+                                    <span class="focus-input100 custom" data-placeholder="Has projector"></span>
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="options4" id="option2" autocomplete="off"> Yes
+                                </label>
+                            </div>
+                        </div>
+                        <div class="wrap-input100 validate-input m-t-w0 m-b-10" data-validate="Password missing">
+                            <input class="input100" id="field3" type="text">
+                            <span class="focus-input100" data-placeholder="Building"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-add btn-validate">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit modal -->
+    <div class="edit-modal">
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit classroom</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body m-t-20">
+                        <div class="wrap-input100 validate-input m-b-40" data-validate="Password missing">
+                            <input class="input100" id="efield1" type="number">
+                            <span class="focus-input100" data-placeholder="Classroom"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input m-b-53" data-validate="Password missing">
+                            <input class="input100" id="efield2" type="number">
+                            <span class="focus-input100" data-placeholder="Seat count"></span>
+                        </div>
+                        <div class="wrap-input100 select-wrap m-b-40">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" name="options3" id="option3" autocomplete="off" class="custom-input has-val" checked> No
+                                    <span class="focus-input100 custom" data-placeholder="Has projector"></span>
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="options4" id="option4" autocomplete="off"> Yes
+                                </label>
+                            </div>
+                        </div>
+                        <div class="wrap-input100 validate-input m-t-w0 m-b-10" data-validate="Password missing">
+                            <input class="input100" id="efield3" type="text">
+                            <span class="focus-input100" data-placeholder="Building"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-edit">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="js/edit.js"></script>
+
+</body>
+
+</html>
