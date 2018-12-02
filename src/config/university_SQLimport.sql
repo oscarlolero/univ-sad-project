@@ -98,7 +98,7 @@ CREATE TABLE time_block
 	time_block_id INT NOT NULL PRIMARY KEY IDENTITY,
 	begin_minute INT,
 	end_minute INT,
-	descr VARCHAR(40) NOT NULL,
+	descr VARCHAR(32) NOT NULL,
 	Monday BIT NOT NULL,
 	Tuesday BIT NOT NULL,
 	Wednesday BIT NOT NULL,
@@ -107,8 +107,8 @@ CREATE TABLE time_block
 	Saturday BIT NOT NULL,
 );
 GO
-INSERT INTO time_block(begin_minute, end_minute, descr, Monday,Tuesday,Wednesday,Thursday,Friday,Saturday) VALUES(480, 600, 'Mon-Wed-Fri 8am to 10am' ,1,0,1,0,1,0);
-INSERT INTO time_block(begin_minute, end_minute, descr, Monday,Tuesday,Wednesday,Thursday,Friday,Saturday) VALUES(630, 740, 'Tue-Thu 10:30am to 12:20pm' ,0,1,0,1,0,0);
+INSERT INTO time_block(begin_minute, end_minute,descr,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday) VALUES(480, 600,'' ,1,0,1,0,1,0);
+INSERT INTO time_block(begin_minute, end_minute,descr,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday) VALUES(630, 740,'',0,1,0,1,0,0);
 GO
 
 CREATE TABLE schedule

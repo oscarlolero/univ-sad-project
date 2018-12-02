@@ -38,6 +38,16 @@ document.querySelector('.btn-add').addEventListener('click', () => {
             numInputElements = 2;
         }
         break;
+
+        case 'timeblocks': {
+            numInputElements = 0;
+            let [field1, field2] = [document.getElementById(`field1`), document.getElementById(`field2`)]
+            fieldsArray.push(getBlockMins(field1.value));
+            fieldsArray.push(getDaysAWeekBooleans(field2.value));
+            fieldsArray.push(`${field1.value} ${getDaysAWeek(...getDaysAWeekBooleans(field2.value))}`);
+
+        }
+        break;
         
         default: return console.log('Error at processing container type.');
         break;
@@ -89,6 +99,13 @@ document.querySelector('.btn-edit').addEventListener('click', () => {
 
         case 'periods': {
             numInputElements = 2;
+            break;
+        }
+
+        case 'timeblocks': {
+            numInputElements = 0;
+            fieldsArray.push(getBlockMins(document.getElementById(`efield1`).value));
+            fieldsArray.push(getDaysAWeekBooleans(document.getElementById(`efield2`).value));
             break;
         }
         default: return console.log('Error at processing container type.');
@@ -199,6 +216,7 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
                 courseSelector.classList.add('has-val');
             break;
             }
+
             case 'periods': {
                 const [periodSelector, dateSelector] = [document.getElementById('efield1'), document.getElementById('efield2')];
                 periodSelector.value = cols.children[0].textContent.trim();
@@ -209,6 +227,16 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
 
             break;
             }
+
+            case 'timeblocks': {
+                const [timeblockSelector, daysAWeekSelector] = [document.getElementById('efield1'), document.getElementById('efield2')];
+                timeblockSelector.value = cols.children[0].textContent.trim();
+                daysAWeekSelector.value = cols.children[1].textContent.trim();
+                timeblockSelector.classList.add('has-val');
+                daysAWeekSelector.classList.add('has-val');
+            break;
+            }
+
             default: return console.log('Error at processing container type.');
             break;
         }
@@ -313,3 +341,35 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
     
     
 })(jQuery);
+
+const getBlockMins = (timeblock) => {
+    let separatedHours = [...timeblock.split(' - ')];
+    let [beginTime, endTime] = [[...separatedHours[0].split(':')], [...separatedHours[1].split(':')]];
+    let [beginMins, endMins] = [parseInt(beginTime[0]) * 60 + parseInt(beginTime[1]),  parseInt(endTime[0]) * 60 + parseInt(endTime[1])];
+
+    return [beginMins, endMins];
+};
+
+const getDaysAWeekBooleans = (days) => {
+    let separatedDays = days.split(',').map(e => e.trim().toLowerCase());
+    
+    return [
+        separatedDays.indexOf('mon') != -1 ? 1 : 0,
+        separatedDays.indexOf('tue') != -1 ? 1 : 0,
+        separatedDays.indexOf('wed') != -1 ? 1 : 0,
+        separatedDays.indexOf('thu') != -1 ? 1 : 0,
+        separatedDays.indexOf('fri') != -1 ? 1 : 0,
+        separatedDays.indexOf('sat') != -1 ? 1 : 0
+    ];
+};
+
+const getDaysAWeek = (mon, tue, wed, thu, fri, sat) => {
+    return [
+        mon ? 'Mon' : '',
+        tue ? 'Tue' : '',
+        wed ? 'Wed' : '',
+        thu ? 'Thu' : '',
+        fri ? 'Fri' : '',
+        sat ? 'Sat' : '',
+    ].filter(el => el != '').join(', ');
+};

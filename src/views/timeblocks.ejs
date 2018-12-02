@@ -2,34 +2,34 @@
 <html lang="en">
 
 <head>
-    <title>University Schedules</title>
+    <title>University time blocks</title>
     <% include partials/head %>
 </head>
 
 <body>
     <% include partials/nav %>
-    <div class="courses js_global_container" data-type="courses">
+    <div class="timeblocks js_global_container" data-type="timeblocks">
         <div class="table100 ver3 m-t-30">
             <table data-vertable="ver3">
                 <thead>
                     <tr class="row100 head">
-                        <th class="column100 column1">Code <span title="Add course" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i></span></th>
-                        <th class="column100 column2">Course</th>
+                        <th class="column100 column1">Time block<span title="Add time block" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i></span></th>
+                        <th class="column100 column2">Days a week</th>
                         <th class="column100 columnAction">Action</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <% rows.forEach(function(course) { %>
+                    <% timeblocks.forEach(function(timeblock) { %>
                     <tr class="row100">
                         <td class="column100 column1">
-                            <%= course.code %>
+                            <%= timeblock.timeBlock %>
                         </td>
                         <td class="column100 column2">
-                            <%= course.descr %>
+                            <%= timeblock.daysAWeek %>
                         </td>
                         <td class="column100 columnAction">
-                            <span data-process="edit-<%= course.course_id %>" title="Edit course" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></span>
-                            <span data-process="delete-<%= course.course_id %>" title="Delete course"><i class="fas fa-minus-circle"></i></span>
+                            <span data-process="edit-<%= timeblock.time_block_id %>" title="Edit time block" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></span>
+                            <span data-process="delete-<%= timeblock.time_block_id %>" title="Delete time block"><i class="fas fa-minus-circle"></i></span>
                         </td>
                     </tr>
                     <% }) %>
@@ -44,7 +44,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Add course</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add time block</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -52,11 +52,11 @@
                     <div class="modal-body m-t-20">
                         <div class="wrap-input100 validate-input m-b-35" data-validate="Password missing">
                             <input class="input100" id="field1" type="text">
-                            <span class="focus-input100" data-placeholder="Code of course"></span>
+                            <span class="focus-input100" data-placeholder="Time block"></span>
                         </div>
                         <div class="wrap-input100 validate-input" data-validate="Password missing">
                             <input class="input100" id="field2" type="text">
-                            <span class="focus-input100" data-placeholder="Name of course"></span>
+                            <span class="focus-input100" data-placeholder="Days a week"></span>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -73,7 +73,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Edit course</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit time block</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -81,13 +81,13 @@
                     <div class="modal-body m-t-20">
                         <div class="wrap-input100 validate-input" data-validate="Password missing">
                             <input class="input100" id="efield1" type="text">
-                            <span class="focus-input100" data-placeholder="Code of course"></span>
+                            <span class="focus-input100" data-placeholder="Time block"></span>
                         </div>
                     </div>
                     <div class="modal-body m-t-20">
                         <div class="wrap-input100 validate-input" data-validate="Password missing">
                             <input class="input100" id="efield2" type="text">
-                            <span class="focus-input100" data-placeholder="Name of course"></span>
+                            <span class="focus-input100" data-placeholder="Days a week"></span>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -102,7 +102,7 @@
     <script src="vendor/bootstrap/js/popper.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="vendor/select2/select2.min.js"></script>
-    <script src="js/edit.js"></script>
+    <script src="js/edit.js" type="module"></script>
 
 </body>
 

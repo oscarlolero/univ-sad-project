@@ -253,6 +253,17 @@ thead i:hover {
   display: flex;
   justify-content: center;
 }
+
+.timeblocks {
+  display: flex;
+  justify-content: center;
+}
+.timeblocks .column1 {
+  width: 200px;
+}
+.timeblocks .column2 {
+  width: 280px;
+}
 /*==================================================================
 [ TABLE Ver3 ]*/
 .table100.ver3 th:first-child {

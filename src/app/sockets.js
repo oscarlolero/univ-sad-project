@@ -20,9 +20,13 @@ module.exports = io => {
                 case 'periods': query = `DELETE FROM period WHERE period_id=${params.id}`;
                 break;
 
+                case 'timeblocks': query = `DELETE FROM time_block WHERE time_block_id=${params.id}`;
+                break;
+
                 default: console.log('Invalid query at deleteRow socket.');
                 break;
             }
+            console.log(query);
             sql.query(database.msurl, query, (err, rows) => {
                 if(err) {
                     return console.log('Database error.', err);
@@ -47,6 +51,20 @@ module.exports = io => {
                 case 'periods' : {
                     const dates = params.fieldsArray[1].split(' to ');
                     query = `INSERT INTO period(descr, begin_date, end_date) VALUES('${params.fieldsArray[0]}', '${dates[0]}', '${dates[1]}')`;
+                    break;
+                }
+
+                case 'timeblocks' : {
+                    query = `INSERT INTO time_block(begin_minute, end_minute, descr, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday) VALUES(
+                        ${params.fieldsArray[0][0]}, 
+                        ${params.fieldsArray[0][1]}, 
+                        '${params.fieldsArray[2]}', 
+                        ${params.fieldsArray[1][0]}, 
+                        ${params.fieldsArray[1][1]},
+                        ${params.fieldsArray[1][2]}, 
+                        ${params.fieldsArray[1][3]},
+                        ${params.fieldsArray[1][4]},
+                        ${params.fieldsArray[1][5]})`;
                     break;
                 }
 
@@ -78,6 +96,17 @@ module.exports = io => {
                 case 'periods' : {
                     const dates = params.fieldsArray[1].split(' to ');
                     query = `UPDATE period SET descr = '${params.fieldsArray[0]}', begin_date = '${dates[0]}', end_date = '${dates[1]}' WHERE period_id = ${params.id}`;
+                    break;
+                }
+
+                case 'timeblocks' : {
+                    query = `UPDATE time_block SET begin_minute = ${params.fieldsArray[0][0]}, end_minute = ${params.fieldsArray[0][1]}, 
+                    Monday = ${params.fieldsArray[1][0]}, 
+                    Tuesday = ${params.fieldsArray[1][1]}, 
+                    Wednesday = ${params.fieldsArray[1][2]},
+                    Thursday = ${params.fieldsArray[1][3]},
+                    Friday = ${params.fieldsArray[1][4]},
+                    Saturday = ${params.fieldsArray[1][5]} WHERE time_block_id = ${params.id}`;
                     break;
                 }
 

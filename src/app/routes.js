@@ -73,7 +73,8 @@ module.exports = (app, passport) => {
                 rows: rows
             });
         });
-    });    
+    });  
+
     //EDIT PROFESSORS
     app.get('/professors', isLoggedIn, (req, res) => {
         let query = `SELECT professor_id, first_name + ' ' + last_name AS name, department_descr, username, user_pass, is_administrator FROM vw_Professor`;
@@ -117,6 +118,7 @@ module.exports = (app, passport) => {
             });
         });
     });
+
     //EDIT PERIODS
     app.get('/periods', isLoggedIn, (req, res) => {
         const query = `SELECT period_id, descr, FORMAT(begin_date, N'MM/dd/yyyy HH:mm:ss') AS begin_date, FORMAT(end_date, N'MM/dd/yyyy HH:mm:ss') AS end_date FROM period`;
@@ -132,12 +134,74 @@ module.exports = (app, passport) => {
         });
     });
 
+    //EDIT TIME BLOCKS
+    app.get('/timeblocks', isLoggedIn, (req, res) => {
+        const query = `SELECT * FROM time_block`;
+        sql.query(database.msurl, query, (err, rows) => {
+            if(err) {
+                return console.log('Database error.', err);
+            }
+
+            let timeBlocks = rows.map(row => {
+                return {
+                    timeBlock: `${getTimeBlock(row.begin_minute, row.end_minute)}`,
+                    daysAWeek: `${getDaysAWeek(row.Monday, row.Tuesday, row.Wednesday, row.Thursday, row.Friday, row.Saturday)}`,
+                    time_block_id: row.time_block_id
+                }
+            });
+
+            res.render('timeblocks', {
+                isAdmin: req.session.passport.user.is_administrator == true ? 2 : 1,
+                username: `${req.session.passport.user.first_name} ${req.session.passport.user.last_name}`,
+                timeblocks: timeBlocks
+            });
+        });
+    });
+
 };
 
-function isLoggedIn(req, res, next) {
-    if(req.isAuthenticated()) { //mehtodo de passport
+const isLoggedIn = (req, res, next) => {
+    if(req.isAuthenticated()) { //metodo de passport
         return next();
     } else {
         res.redirect('/university');
     }
-}
+};
+
+const getTimeBlock = (beginmin, endmin) => {
+
+    let beginTime = [Math.floor(beginmin / 60), beginmin % 60].map(el => {
+        if(el < 10) {
+            let temp = '0';
+            temp = temp.concat(el);
+            return temp;
+        } else {
+            return el;
+        }
+    }).join(':');
+
+    let endTime = [Math.floor(endmin / 60), endmin % 60].map(el => {
+        if(el < 10) {
+            let temp = '0';
+            temp = temp.concat(el);
+            return temp;
+        } else {
+            return el;
+        }
+    }).join(':');
+    
+    return `${beginTime} - ${endTime}`;
+};
+
+const getDaysAWeek = (mon, tue, wed, thu, fri, sat) => {
+    return [
+        mon ? 'Mon' : '',
+        tue ? 'Tue' : '',
+        wed ? 'Wed' : '',
+        thu ? 'Thu' : '',
+        fri ? 'Fri' : '',
+        sat ? 'Sat' : '',
+    ].filter(el => el != '').join(', ');
+};
+
+
