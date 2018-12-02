@@ -2,31 +2,34 @@
 <html lang="en">
 
 <head>
-    <title>Admin - Departments</title>
+    <title>University Schedules</title>
     <% include partials/head %>
 </head>
 
 <body>
     <% include partials/nav %>
-    <div class="departments js_global_container" data-type="departments">
+    <div class="courses js_global_container" data-type="courses">
         <div class="table100 ver3 m-t-30">
             <table data-vertable="ver3">
                 <thead>
                     <tr class="row100 head">
-                        <th class="column100 column1">Department <span title="Add department" data-toggle="modal"
-                                data-target="#addModal"><i class="fas fa-plus-circle"></i></span></th>
+                        <th class="column100 column1"> Code <span title="Add course" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i></span></th>
+                        <th class="column100 column2">Course</th>
                         <th class="column100 columnAction">Action</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <% rows.forEach(function(department) { %>
+                    <% rows.forEach(function(course) { %>
                     <tr class="row100">
                         <td class="column100 column1">
-                            <%= department.descr %>
+                            <%= course.code %>
+                        </td>
+                        <td class="column100 column2">
+                            <%= course.descr %>
                         </td>
                         <td class="column100 columnAction">
-                            <span data-process="edit-<%= department.department_id %>" title="Edit department" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></span>
-                            <span data-process="delete-<%= department.department_id %>" title="Delete department"><i class="fas fa-minus-circle"></i></span>
+                            <span data-process="edit-<%= course.course_id %>" title="Edit course" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></span>
+                            <span data-process="delete-<%= course.course_id %>" title="Delete course"><i class="fas fa-minus-circle"></i></span>
                         </td>
                     </tr>
                     <% }) %>
@@ -41,15 +44,19 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Add department</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add course</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body m-t-20">
-                        <div class="wrap-input100 validate-input" data-validate="Password missing">
+                        <div class="wrap-input100 validate-input m-b-35" data-validate="Password missing">
                             <input class="input100" id="field1" type="text">
-                            <span class="focus-input100" data-placeholder="Name of department"></span>
+                            <span class="focus-input100" data-placeholder="Code of course"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input" data-validate="Password missing">
+                            <input class="input100" id="field2" type="text">
+                            <span class="focus-input100" data-placeholder="Name of course"></span>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -66,7 +73,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Edit department</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit course</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -74,7 +81,13 @@
                     <div class="modal-body m-t-20">
                         <div class="wrap-input100 validate-input" data-validate="Password missing">
                             <input class="input100" id="efield1" type="text">
-                            <span class="focus-input100" data-placeholder="Name of department"></span>
+                            <span class="focus-input100" data-placeholder="Code of course"></span>
+                        </div>
+                    </div>
+                    <div class="modal-body m-t-20">
+                        <div class="wrap-input100 validate-input" data-validate="Password missing">
+                            <input class="input100" id="efield2" type="text">
+                            <span class="focus-input100" data-placeholder="Name of course"></span>
                         </div>
                     </div>
                     <div class="modal-footer">

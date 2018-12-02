@@ -39,8 +39,8 @@ GO
 CREATE TABLE course
 (
 	course_id INT NOT NULL PRIMARY KEY IDENTITY,
-	code VARCHAR(5) NOT NULL,
-	descr VARCHAR(32) NOT NULL
+	code VARCHAR(50) NOT NULL,
+	descr VARCHAR(50) NOT NULL
 );
 GO
 INSERT INTO course(code,descr) VALUES('ABP01','Programming I');

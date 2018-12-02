@@ -29,6 +29,11 @@ document.querySelector('.btn-add').addEventListener('click', e => {
        break;
         }
 
+        case 'courses': {
+            numInputElements = 2;
+        }
+        break;
+        
         default: return console.log('Error at processing container type.');
         break;
     }
@@ -48,7 +53,7 @@ document.querySelector('.btn-add').addEventListener('click', e => {
 
 document.querySelector('.btn-edit').addEventListener('click', e => {
     const type = document.querySelector('.js_global_container').dataset.type;
-    const fields = document.querySelector('.edit-modal .modal-body') //.childElementCount
+    // const fields = document.querySelector('.edit-modal .modal-body') //.childElementCount
        
     let numInputElements;
     let fieldsArray = [];
@@ -56,7 +61,7 @@ document.querySelector('.btn-edit').addEventListener('click', e => {
     switch (type) {
         case 'departments': {
             numInputElements = 1;
-        break
+        break;
         }
 
         case 'professors': {
@@ -72,6 +77,10 @@ document.querySelector('.btn-edit').addEventListener('click', e => {
        break;
         }
 
+        case 'courses': {
+            numInputElements = 2;
+        break;
+        }
         default: return console.log('Error at processing container type.');
         break;
     }
@@ -172,6 +181,13 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
             break;
             }
     
+            case 'courses': {
+                const [codeSelector, courseSelector] = [document.getElementById('efield1'), document.getElementById('efield2')];
+                codeSelector.value = cols.children[0].textContent.trim();
+                courseSelector.value = cols.children[1].textContent.trim();
+                codeSelector.classList.add('has-val');
+                courseSelector.classList.add('has-val');
+            }
             default: return console.log('Error at processing container type.');
             break;
         }

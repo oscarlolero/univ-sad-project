@@ -215,6 +215,25 @@ thead i:hover {
   width: 240px;
 }
 
+.courses table {
+  width: auto;
+}
+
+.courses {
+  display: flex;
+  justify-content: center;
+}
+
+.courses .column2 {
+  width: 350px;
+}
+.courses .column1 {
+  width: 150px;
+}
+.courses .columnAction {
+  width: 50px;
+}
+
 .professors .column1,
 .professors .column2,
 .professors .column3,

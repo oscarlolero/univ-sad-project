@@ -7,12 +7,14 @@ module.exports = io => {
 
         socket.on('deleteRow', (params, callback) => {
             let query;
-            console.log(params.type);
             switch(params.type) {
                 case 'departments': query = `DELETE FROM department WHERE department_id=${params.id}`;
                 break;
                 
                 case 'professors': query = `DELETE FROM professor WHERE professor_id=${params.id}`;
+                break;
+
+                case 'courses': query = `DELETE FROM course WHERE course_id=${params.id}`;
                 break;
 
                 default: console.log('Invalid query at deleteRow socket.');
@@ -36,6 +38,9 @@ module.exports = io => {
                 case 'professors': query = `INSERT INTO professor(last_name, first_name, department_id, username, user_pass, is_administrator) VALUES('${params.fieldsArray[3]}', '${params.fieldsArray[2]}', ${params.fieldsArray[0]}, '${params.fieldsArray[4]}', '${params.fieldsArray[5]}', ${params.fieldsArray[1]})`;
                 break;
 
+                case 'courses': query = `INSERT INTO course(code, descr) VALUES('${params.fieldsArray[0]}', '${params.fieldsArray[1]}')`;
+                break;
+
                 default: console.log('Invalid query at insertRow socket.');
                 break;
             }
@@ -56,6 +61,9 @@ module.exports = io => {
                 break;
 
                 case 'professors': query = `UPDATE professor SET first_name = '${params.fieldsArray[2]}', last_name = '${params.fieldsArray[3]}', department_id = ${params.fieldsArray[0]}, username = '${params.fieldsArray[4]}', user_pass = '${params.fieldsArray[5]}', is_administrator = ${params.fieldsArray[1]} WHERE professor_id = ${params.id}`;
+                break;
+
+                case 'courses': query = `UPDATE course SET code = '${params.fieldsArray[0]}', descr = '${params.fieldsArray[1]}' WHERE course_id = ${params.id}`;
                 break;
 
                 default: console.log('Invalid query at updateRow socket.');

@@ -103,6 +103,21 @@ module.exports = (app, passport) => {
         });
     });
 
+    //EDIT DEPARTMENTS
+    app.get('/courses', isLoggedIn, (req, res) => {
+        const query = `SELECT * FROM course`;
+        sql.query(database.msurl, query, (err, rows) => {
+            if(err) {
+                return console.log('Database error.', err);
+            }
+            res.render('courses', {
+                isAdmin: req.session.passport.user.is_administrator == true ? 2 : 1,
+                username: `${req.session.passport.user.first_name} ${req.session.passport.user.last_name}`,
+                rows: rows
+            });
+        });
+    });
+
 };
 
 function isLoggedIn(req, res, next) {
