@@ -17,6 +17,9 @@ module.exports = io => {
                 case 'courses': query = `DELETE FROM course WHERE course_id=${params.id}`;
                 break;
 
+                case 'periods': query = `DELETE FROM period WHERE period_id=${params.id}`;
+                break;
+
                 default: console.log('Invalid query at deleteRow socket.');
                 break;
             }
@@ -40,6 +43,12 @@ module.exports = io => {
 
                 case 'courses': query = `INSERT INTO course(code, descr) VALUES('${params.fieldsArray[0]}', '${params.fieldsArray[1]}')`;
                 break;
+
+                case 'periods' : {
+                    const dates = params.fieldsArray[1].split(' to ');
+                    query = `INSERT INTO period(descr, begin_date, end_date) VALUES('${params.fieldsArray[0]}', '${dates[0]}', '${dates[1]}')`;
+                    break;
+                }
 
                 default: console.log('Invalid query at insertRow socket.');
                 break;
@@ -65,6 +74,12 @@ module.exports = io => {
 
                 case 'courses': query = `UPDATE course SET code = '${params.fieldsArray[0]}', descr = '${params.fieldsArray[1]}' WHERE course_id = ${params.id}`;
                 break;
+
+                case 'periods' : {
+                    const dates = params.fieldsArray[1].split(' to ');
+                    query = `UPDATE period SET descr = '${params.fieldsArray[0]}', begin_date = '${dates[0]}', end_date = '${dates[1]}' WHERE period_id = ${params.id}`;
+                    break;
+                }
 
                 default: console.log('Invalid query at updateRow socket.');
                 break;

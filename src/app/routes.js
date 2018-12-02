@@ -103,7 +103,7 @@ module.exports = (app, passport) => {
         });
     });
 
-    //EDIT DEPARTMENTS
+    //EDIT COURSES
     app.get('/courses', isLoggedIn, (req, res) => {
         const query = `SELECT * FROM course`;
         sql.query(database.msurl, query, (err, rows) => {
@@ -111,6 +111,20 @@ module.exports = (app, passport) => {
                 return console.log('Database error.', err);
             }
             res.render('courses', {
+                isAdmin: req.session.passport.user.is_administrator == true ? 2 : 1,
+                username: `${req.session.passport.user.first_name} ${req.session.passport.user.last_name}`,
+                rows: rows
+            });
+        });
+    });
+    //EDIT PERIODS
+    app.get('/periods', isLoggedIn, (req, res) => {
+        const query = `SELECT period_id, descr, FORMAT(begin_date, N'MM/dd/yyyy HH:mm:ss') AS begin_date, FORMAT(end_date, N'MM/dd/yyyy HH:mm:ss') AS end_date FROM period`;
+        sql.query(database.msurl, query, (err, rows) => {
+            if(err) {
+                return console.log('Database error.', err);
+            }
+            res.render('periods', {
                 isAdmin: req.session.passport.user.is_administrator == true ? 2 : 1,
                 username: `${req.session.passport.user.first_name} ${req.session.passport.user.last_name}`,
                 rows: rows

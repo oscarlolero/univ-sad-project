@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Admin - Periods</title>
+    <% include partials/head %>
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+</head>
+
+<body>
+    <% include partials/nav %>
+    <div class="periods js_global_container" data-type="periods">
+        <div class="table100 ver3 m-t-30 m-l-40 m-r-40">
+            <table data-vertable="ver3">
+                <thead>
+                    <tr class="row100 head">
+                        <th class="column100 column1">Period <span title="Add period" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i></span></th>
+                        <th class="column100 column2">Begin date</th>
+                        <th class="column100 column3">End date</th>
+                        <th class="column100 columnAction">Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% rows.forEach(function(period) { %>
+                    <tr class="row100">
+                        <td class="column100 column1"><%= period.descr %></td>
+                        <td class="column100 column2"><%= period.begin_date %></td>
+                        <td class="column100 column3"><%= period.end_date %></td>
+                        <td class="column100 columnAction">
+                            <span data-process="edit-<%= period.period_id %>" title="Edit period" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></span>
+                            <span data-process="delete-<%= period.period_id %>" title="Delete period"><i class="fas fa-minus-circle"></i></span>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Insert modal -->
+    <div class="insert-modal">
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add period</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body m-t-20">
+                        <div class="wrap-input100 validate-input m-b-35" data-validate="Invalid name">
+                            <input class="input100" id="field1" type="text">
+                            <span class="focus-input100" data-placeholder="Period name"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input" data-validate="Invalid name">
+                            <input type="text" class="input100" id="field2" value="" readonly/>
+                            <span class="focus-input100" data-placeholder="Begin and end date"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-add">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit modal -->
+    <div class="edit-modal">
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit period</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body m-t-20">
+                        <div class="wrap-input100 validate-input m-b-35" data-validate="Invalid name">
+                            <input class="input100" id="efield1" type="text">
+                            <span class="focus-input100" data-placeholder="Period name"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input" data-validate="Invalid name">
+                            <input type="text" class="input100" id="efield2" value="" readonly/>
+                            <span class="focus-input100" data-placeholder="Begin and end date"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-edit">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    
+
+    <script src="js/edit.js"></script>
+    <script>
+    $('#field2, #efield2').daterangepicker({
+        autoUpdateInput: false,
+        minYear: 2000,
+        maxYear: 2050,
+        timePicker: true,
+        timePicker24Hour: true,
+        timePickerIncrement: 30,
+        locale: {
+ 
+        },
+        opens: "center"
+    }, function(start, end, label) {
+        // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+        $('#field2, #efield2').addClass('has-val');
+    });
+
+    $('#field2, #efield2').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY H:mm:ss') + ' to ' + picker.endDate.format('MM/DD/YYYY H:mm:ss'));
+    });
+
+    </script>
+
+</body>
+
+</html>

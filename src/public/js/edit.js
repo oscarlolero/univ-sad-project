@@ -4,7 +4,7 @@ socket.on('connect', () => {
 	console.log('Conectado');
 });
 
-document.querySelector('.btn-add').addEventListener('click', e => {
+document.querySelector('.btn-add').addEventListener('click', () => {
     const type = document.querySelector('.js_global_container').dataset.type;
     // const fields = document.querySelector('.insert-modal .modal-body'); //.childElementCount
     let numInputElements;
@@ -33,6 +33,11 @@ document.querySelector('.btn-add').addEventListener('click', e => {
             numInputElements = 2;
         }
         break;
+
+        case 'periods': {
+            numInputElements = 2;
+        }
+        break;
         
         default: return console.log('Error at processing container type.');
         break;
@@ -51,7 +56,7 @@ document.querySelector('.btn-add').addEventListener('click', e => {
     });
 });
 
-document.querySelector('.btn-edit').addEventListener('click', e => {
+document.querySelector('.btn-edit').addEventListener('click', () => {
     const type = document.querySelector('.js_global_container').dataset.type;
     // const fields = document.querySelector('.edit-modal .modal-body') //.childElementCount
        
@@ -61,7 +66,7 @@ document.querySelector('.btn-edit').addEventListener('click', e => {
     switch (type) {
         case 'departments': {
             numInputElements = 1;
-        break;
+            break;
         }
 
         case 'professors': {
@@ -74,12 +79,17 @@ document.querySelector('.btn-edit').addEventListener('click', e => {
             } else {
                 fieldsArray.push(0);
             }
-       break;
+            break;
         }
 
         case 'courses': {
             numInputElements = 2;
-        break;
+            break;
+        }
+
+        case 'periods': {
+            numInputElements = 2;
+            break;
         }
         default: return console.log('Error at processing container type.');
         break;
@@ -126,7 +136,7 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
                 const selector = document.getElementById('efield1');
                 selector.value = cols.children[0].textContent.trim();
                 selector.classList.add('has-val');
-            break
+            break;
             }
     
             case 'professors': {
@@ -187,6 +197,17 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
                 courseSelector.value = cols.children[1].textContent.trim();
                 codeSelector.classList.add('has-val');
                 courseSelector.classList.add('has-val');
+            break;
+            }
+            case 'periods': {
+                const [periodSelector, dateSelector] = [document.getElementById('efield1'), document.getElementById('efield2')];
+                periodSelector.value = cols.children[0].textContent.trim();
+                periodSelector.classList.add('has-val');
+
+                dateSelector.value = `${cols.children[1].textContent.trim()} to ${cols.children[2].textContent.trim()}`;
+                dateSelector.classList.add('has-val');
+
+            break;
             }
             default: return console.log('Error at processing container type.');
             break;

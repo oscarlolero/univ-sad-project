@@ -73,7 +73,7 @@ CREATE TABLE period
 	end_date SMALLDATETIME NOT NULL
 );
 INSERT INTO period(descr,begin_date,end_date) VALUES('Primer semestre 2018','1-22-2018 00:00:00','6-9-2018 00:00:00');
-INSERT INTO period(descr,begin_date,end_date) VALUES('Segundo semestre 2018','8-11-2018 00:00:00','12-9-2018 00:00:00');
+INSERT INTO period(descr,begin_date,end_date) VALUES('Segundo semestre 2018','8-11-2018 10:00:00','12-9-2018 16:00:00');
 GO
 
 CREATE TABLE professor

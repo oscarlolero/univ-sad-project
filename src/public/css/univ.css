@@ -146,12 +146,12 @@ nav li:hover .submenu > li {
 
 /*//////////////////////////////////////////////////////////////////
 [ Table ]*/
-table {
+.table100 table {
   width: 100%;
   background-color: #fff;
 }
 
-th, td {
+.table100 th, .table100 td {
   font-weight: unset;
   padding-right: 25px;
 }
@@ -200,11 +200,9 @@ thead i:hover {
 }
 .columnAction {
   text-align: center;
+  width: 50px;
 }
 
-.departments table {
-  width: auto;
-}
 
 .departments {
   display: flex;
@@ -230,18 +228,30 @@ thead i:hover {
 .courses .column1 {
   width: 150px;
 }
-.courses .columnAction {
-  width: 50px;
+
+.professors {
+  display: flex;
+  justify-content: center;
+}
+.professors .column1,
+.professors .column2 {
+  width: 350px;
 }
 
-.professors .column1,
-.professors .column2,
 .professors .column3,
 .professors .column4 {
-  width: 240px;
+  width: 200px;
 }
-.professors .columnAction {
-  width: 50px;
+
+.periods .column1,
+.periods .column2,
+.periods .column3 {
+  width: 280px;
+}
+
+.periods {
+  display: flex;
+  justify-content: center;
 }
 /*==================================================================
 [ TABLE Ver3 ]*/
