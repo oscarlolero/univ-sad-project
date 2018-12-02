@@ -63,6 +63,7 @@
                             <span class="focus-input100" data-placeholder="Last name"></span>
                         </div>
                         <div class="wrap-input100 select-wrap m-b-35">
+                            <span class="focus-select">Department</span>
                             <select class="input100-select">
                                 <option>Select departament...</option>
                             </select>
@@ -76,9 +77,10 @@
                             <span class="focus-input100" data-placeholder="Password"></span>
                         </div>
                         <div class="wrap-input100 select-wrap m-b-10">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <div class="btn-group btn-group-toggle m-t-20" data-toggle="buttons">
                                 <label class="btn btn-secondary active">
-                                  <input type="radio" name="options" id="option1" autocomplete="off" checked> No
+                                  <input type="radio" name="options" id="option1" autocomplete="off" class="custom-input has-val" checked> No
+                                  <span class="focus-input100 custom" data-placeholder="Administrator"></span>
                                 </label>
                                 <label class="btn btn-secondary">
                                   <input type="radio" name="options" id="option2" autocomplete="off"> Yes
@@ -110,11 +112,12 @@
                             <input class="input100" id="efield1" type="text">
                             <span class="focus-input100" data-placeholder="First name"></span>
                         </div>
-                        <div class="wrap-input100 validate-input m-b-35" data-validate="Invalid last name">
+                        <div class="wrap-input100 validate-input m-b-28" data-validate="Invalid last name">
                             <input class="input100" id="efield2" type="text">
                             <span class="focus-input100" data-placeholder="Last name"></span>
                         </div>
                         <div class="wrap-input100 select-wrap m-b-45">
+                            <span class="focus-select">Department</span>
                             <select class="input100-select-edit">
                                 <option>Select departament...</option>
                             </select>
@@ -159,10 +162,10 @@
         }, (departments) => {
             while (selector.firstChild) {
                 selector.removeChild(selector.firstChild);
-            } 
+            }
             let markup = '<option value="0">Select departament...</option>';
-            departments.forEach(e => {
-                markup = markup.concat(`<option value="${e.department_id}">${e.descr}</option>`);
+            departments.forEach((e,i) => { 
+                markup = markup.concat(`<option value="${i+1}" data-dep_id="${e.department_id}">${e.descr}</option>`);
             });
             selector.insertAdjacentHTML('beforeend', markup);
         });

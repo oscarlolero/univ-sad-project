@@ -19,7 +19,7 @@ document.querySelector('.btn-add').addEventListener('click', () => {
         case 'professors': {
             numInputElements = 4;
             //Leer departamento
-            fieldsArray.push(parseInt(document.querySelector('.input100-select').value));
+            fieldsArray.push(parseInt($('.input100-select').find(':selected').data('dep_id')));
             //Leer si es admin
             if(document.querySelector('.btn-group-toggle').children[1].classList.contains('active')) {
                 fieldsArray.push(1);
@@ -59,6 +59,17 @@ document.querySelector('.btn-add').addEventListener('click', () => {
        break;
         }
 
+        case 'schedules': {
+            numInputElements = 0;
+            //Leer selects
+            fieldsArray.push(parseInt($('.insert-modal .s1').find(':selected').data('pro_id')));
+            fieldsArray.push(parseInt($('.insert-modal .s2').find(':selected').data('cou_id')));
+            fieldsArray.push(parseInt($('.insert-modal .s3').find(':selected').data('per_id')));
+            fieldsArray.push(parseInt($('.insert-modal .s4').find(':selected').data('tim_id')));
+            fieldsArray.push(parseInt($('.insert-modal .s5').find(':selected').data('cla_id')));
+        break;
+        }
+
         default: return console.log('Error at processing container type.');
         break;
     }
@@ -79,8 +90,7 @@ document.querySelector('.btn-add').addEventListener('click', () => {
 
 document.querySelector('.btn-edit').addEventListener('click', () => {
     const type = document.querySelector('.js_global_container').dataset.type;
-    // const fields = document.querySelector('.edit-modal .modal-body') //.childElementCount
-       
+    
     let numInputElements;
     let fieldsArray = [];
 
@@ -286,6 +296,59 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
                 classroomSelector.classList.add('has-val');
                 seatcountSelector.classList.add('has-val');
                 buildingSelector.classList.add('has-val');
+            break;
+            }
+
+            case 'schedules': {
+                //Get list of departments and select the actual department
+                // const selectsSelector = document.querySelectorAll('.input100-select-edit');
+                // console.log(selectsSelector);
+                // socket.emit('getDepartments', {
+                // }, (departments) => {
+                //     while (selectSelector.firstChild) {
+                //         selectSelector.removeChild(selectSelector.firstChild);
+                //     } 
+                //     let markup = '';
+                //     departments.forEach((e, index) => {
+                //         markup = markup.concat(`<option value="${index}" data-dep_id="${e.department_id}">${e.descr}</option>`);
+                //     });
+                //     selectSelector.insertAdjacentHTML('beforeend', markup);
+
+                //     for(let i = 0; i <= selectSelector.childElementCount - 1; i++) {
+                //         if(cols.children[1].textContent == selectSelector.children[i].textContent) {
+                //             selectSelector.value = i;
+                //         }
+                //     }
+                // });
+
+                // //Get inputs
+                // //Get first and last name   
+                // socket.emit('getProfessorName', {
+                //     professor_id: document.querySelector('.edit-modal').dataset.js_edit_id
+                // }, (professorRow) => {
+                //     const [fistNameField, lastNameField] = [document.getElementById('efield1'), document.getElementById('efield2')];
+                //     fistNameField.value = professorRow[0].first_name;
+                //     lastNameField.value = professorRow[0].last_name;
+                //     fistNameField.classList.add('has-val');
+                //     lastNameField.classList.add('has-val');
+                // });
+
+                // //Get username and password
+                // const [usernameField, passwordField] = [document.getElementById('efield3'), document.getElementById('efield4')];
+                // usernameField.value = cols.children[2].textContent.trim();
+                // passwordField.value = cols.children[3].textContent.trim();
+                // usernameField.classList.add('has-val');
+                // passwordField.classList.add('has-val');
+
+                // //Select if is admin or not
+                // const isAdminSelector = document.querySelector('.edit-modal .btn-group-toggle');
+                // if(cols.children[4].textContent.trim() === 'Yes') {
+                //     isAdminSelector.children[0].classList.remove('active');
+                //     isAdminSelector.children[1].classList.add('active');
+                // } else {
+                //     isAdminSelector.children[0].classList.add('active');
+                //     isAdminSelector.children[1].classList.remove('active');            
+                // }
             break;
             }
 

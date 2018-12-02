@@ -173,6 +173,21 @@ module.exports = (app, passport) => {
         });
     });
 
+    //EDIT SCHEDULES
+    app.get('/schedules', isLoggedIn, (req, res) => {
+        const query = `SELECT * FROM vw_Schedule`;
+        sql.query(database.msurl, query, (err, rows) => {
+            if(err) {
+                return console.log('Database error.', err);
+            }
+            res.render('schedules', {
+                isAdmin: req.session.passport.user.is_administrator == true ? 2 : 1,
+                username: `${req.session.passport.user.first_name} ${req.session.passport.user.last_name}`,
+                rows: rows
+            });
+        });
+    });
+
 };
 
 const isLoggedIn = (req, res, next) => {

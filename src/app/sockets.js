@@ -82,6 +82,16 @@ module.exports = io => {
                     )`;
                 break;
 
+                case 'schedules': query = `INSERT INTO schedule(professor_id, course_id, period_id, time_block_id, classroom_id) 
+                    VALUES(
+                        ${params.fieldsArray[0]},
+                        ${params.fieldsArray[1]},
+                        ${params.fieldsArray[2]},
+                        ${params.fieldsArray[3]},
+                        ${params.fieldsArray[4]}
+                    )`;
+                break;
+
                 default: console.log('Invalid query at insertRow socket.');
                 break;
             }
@@ -163,5 +173,44 @@ module.exports = io => {
             });
         });
 
+        socket.on('getScheduleData', async (params, callback) => {
+            let query;
+            let data = {};
+
+            try {
+                query = `SELECT professor_id, first_name + ' ' + last_name AS professor_name FROM professor ORDER BY first_name`;
+                data.professorsData = await SQLQuery(query);
+    
+                query = `SELECT course_id, code + ' ' + descr AS course_name FROM course ORDER BY code`;
+                data.coursesData = await SQLQuery(query);
+    
+                query = `SELECT period_id, descr AS period_name FROM period ORDER BY descr`;
+                data.periodsData = await SQLQuery(query);
+    
+                query = `SELECT time_block_id, descr AS time_block_name FROM time_block ORDER BY begin_minute`;
+                data.timeblocksData = await SQLQuery(query);
+    
+                query = `SELECT classroom_id, CAST(descr AS VARCHAR) + ' (' + building + ')' AS classroom_name FROM classroom ORDER BY descr`;
+                data.classroomsData = await SQLQuery(query);
+
+                callback(data);
+            }
+            catch(e) {
+                callback('Error at retrieving data from Database.')
+                return console.log(e);
+            }
+        });
+
     }); 
+};
+
+const SQLQuery = query => {
+    return new Promise((resolve, reject) => {
+        sql.query(database.msurl, query, (err, rows) => {
+            if(err) {
+                reject(err);
+            }
+            resolve(rows);
+        });        
+    });
 };

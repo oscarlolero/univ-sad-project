@@ -275,6 +275,18 @@ thead i:hover {
   display: flex;
   justify-content: center;
 }
+
+.schedules .column1,
+.schedules .column3,
+.schedules .column4,
+.schedules .column5 {
+  width: 270px;
+}
+
+.schedules {
+  display: flex;
+  justify-content: center;
+}
 /*==================================================================
 [ TABLE Ver3 ]*/
 .table100.ver3 th:first-child {
@@ -396,6 +408,14 @@ thead i:hover {
 
 :not(.custom).focus-input100::before {
   background: #6a73b4;
+}
+
+.focus-select {
+  font-size: 15px;
+  color: #999999;
+  line-height: 1.2;
+  display: flex;
+  margin-bottom: 10px;
 }
 
 .focus-input100::after {

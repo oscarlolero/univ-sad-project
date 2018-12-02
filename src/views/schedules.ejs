@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Admin - Professors</title>
+    <% include partials/head %>
+</head>
+
+<body>
+    <% include partials/nav %>
+    <div class="schedules js_global_container" data-type="schedules">
+        <div class="table100 ver3 m-t-30 m-l-20 m-r-20">
+            <table data-vertable="ver3">
+                <thead>
+                    <tr class="row100 head">
+                        <th class="column100 column1">Professor <span title="Add schedule" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i></span></th>
+                        <th class="column100 column2">Course code</th>
+                        <th class="column100 column3">Course name</th>
+                        <th class="column100 column4">Period</th>
+                        <th class="column100 column5">Time block</th>
+                        <th class="column100 column6">Classroom</th>
+                        <th class="column100 column7">Building</th>
+                        <th class="column100 columnAction">Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% rows.forEach(function(schedule) { %>
+                    <tr class="row100">
+                        <td class="column100 column1">
+                            <%= schedule.professor_name %>
+                        </td>
+                        <td class="column100 column2">
+                            <%= schedule.course_code %>
+                        </td>
+                        <td class="column100 column3">
+                            <%= schedule.course_name %>
+                        </td>
+                        <td class="column100 column4">
+                            <%= schedule.period %>
+                        </td>
+                        <td class="column100 column5">
+                            <%= schedule.time_block %>
+                        </td>
+                        <td class="column100 column6">
+                            <%= schedule.classroom %>
+                        </td>
+                        <td class="column100 column7">
+                            <%= schedule.classroom_building %>
+                        </td>
+                        <td class="column100 columnAction">
+                            <span data-process="edit-<%= schedule.schedule_id %>" title="Edit schedule" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></span>
+                            <span data-process="delete-<%= schedule.schedule_id %>" title="Delete schedule"><i class="fas fa-minus-circle"></i></span>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Insert modal -->
+    <div class="insert-modal">
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add schedule</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <div class="wrap-input100 select-wrap m-b-35">
+                            <span class="focus-select">Professor</span>
+                            <!-- s1 = select 1 -->
+                            <select class="input100-select s1"> 
+                                <option>Select professor...</option>
+                            </select>
+                        </div>
+                        <div class="wrap-input100 select-wrap m-b-35">
+                            <span class="focus-select">Course</span>
+                            <select class="input100-select s2">
+                                <option>Select course...</option>
+                            </select>
+                        </div>
+                        <div class="wrap-input100 select-wrap m-b-35">
+                            <span class="focus-select">Period</span>
+                            <select class="input100-select s3">
+                                <option>Select period...</option>
+                            </select>
+                        </div>
+                        <div class="wrap-input100 select-wrap m-b-35">
+                            <span class="focus-select">Time block</span>
+                            <select class="input100-select s4">
+                                <option>Select time block...</option>
+                            </select>
+                        </div>
+                        <div class="wrap-input100 select-wrap m-b-35">
+                            <span class="focus-select">Classroom</span>
+                            <select class="input100-select s5">
+                                <option>Select classroom...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-add">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit modal -->
+    <div class="edit-modal">
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit professor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body m-t-20">
+                        <div class="wrap-input100 validate-input m-b-35" data-validate="Invalid name">
+                            <input class="input100" id="efield1" type="text">
+                            <span class="focus-input100" data-placeholder="First name"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input m-b-35" data-validate="Invalid last name">
+                            <input class="input100" id="efield2" type="text">
+                            <span class="focus-input100" data-placeholder="Last name"></span>
+                        </div>
+                        <div class="wrap-input100 select-wrap m-b-45">
+                            <select class="input100-select-edit">
+                                <option>Select departament...</option>
+                            </select>
+                        </div>
+                        <div class="wrap-input100 validate-input m-b-40" data-validate="Invalid last name">
+                            <input class="input100" id="efield3" type="text">
+                            <span class="focus-input100" data-placeholder="Username"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input m-b-35" data-validate="Invalid last name">
+                            <input class="input100" id="efield4" type="text">
+                            <span class="focus-input100" data-placeholder="Password"></span>
+                        </div>
+                        <div class="wrap-input100 select-wrap m-b-10">
+                            <div class="btn-group btn-group-toggle m-t-20" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                  <input type="radio" name="options2" id="option3" autocomplete="off" class="custom-input has-val" checked > No
+                                  <span class="focus-input100 custom" data-placeholder="Administrator"></span>
+                                </label>
+                                <label class="btn btn-secondary">
+                                  <input type="radio" name="options2" id="option4" autocomplete="off"> Yes
+                                </label> 
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-edit">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="js/edit.js"></script>
+    <script>
+    document.querySelector('.schedules span').addEventListener('click', e => {
+        let selector = document.querySelectorAll('.insert-modal .input100-select');
+        socket.emit('getScheduleData', {
+        }, (data) => {
+            fillSelects(data);
+        });
+
+        const fillSelects = (data) => {
+            //Limpiar selects
+            let markup;
+            Object.values(data).forEach((element, i) => {
+                while(selector[i].firstChild) {
+                    selector[i].removeChild(selector[i].firstChild);
+                }
+            });
+            
+            //Rellenar selects
+            markup = '<option value="0">Select professor...</option>';
+            Object.values(data.professorsData).forEach((e, i) => {
+                markup = markup.concat(`<option value="${i+1}" data-pro_id="${e.professor_id}">${e.professor_name}</option>`);
+            });
+            selector[0].insertAdjacentHTML('beforeend', markup);
+
+            markup = '<option value="0">Select course...</option>';
+            Object.values(data.coursesData).forEach((e, i) => {
+                markup = markup.concat(`<option value="${i+1}" data-cou_id="${e.course_id}">${e.course_name}</option>`);
+            });
+            selector[1].insertAdjacentHTML('beforeend', markup);
+
+            markup = '<option value="0">Select period...</option>';
+            Object.values(data.periodsData).forEach((e, i) => {
+                markup = markup.concat(`<option value="${i+1}" data-per_id="${e.period_id}">${e.period_name}</option>`);
+            });
+            selector[2].insertAdjacentHTML('beforeend', markup);
+
+            markup = '<option value="0">Select time block...</option>';
+            Object.values(data.timeblocksData).forEach((e, i) => {
+                markup = markup.concat(`<option value="${i+1}" data-tim_id="${e.time_block_id}">${e.time_block_name}</option>`);
+            });
+            selector[3].insertAdjacentHTML('beforeend', markup);
+
+            markup = '<option value="0">Select classroom...</option>';
+            Object.values(data.classroomsData).forEach((e, i) => {
+                markup = markup.concat(`<option value="${i+1}" data-cla_id="${e.classroom_id}">${e.classroom_name}</option>`);
+            });
+            selector[4].insertAdjacentHTML('beforeend', markup);
+        }
+    });
+    </script>
+</body>
+
+</html>
