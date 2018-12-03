@@ -28,6 +28,9 @@ module.exports = io => {
                 case 'classrooms': query = `DELETE FROM classroom WHERE classroom_id=${params.id}`;
                 break;
 
+                case 'schedules': query = `DELETE FROM schedule WHERE schedule_id=${params.id}`;
+                break;
+
                 default: console.log('Invalid query at deleteRow socket.');
                 break;
             }
@@ -139,6 +142,20 @@ module.exports = io => {
                     query = `UPDATE classroom SET descr = ${parseInt(params.fieldsArray[1])}, seat_count = ${parseInt(params.fieldsArray[2])}, has_projector = ${params.fieldsArray[0]}, building = '${params.fieldsArray[3]}' WHERE classroom_id = ${params.id}`;
                     break;
                 }
+
+                case 'schedules': {
+                    query = `UPDATE schedule SET
+                        professor_id=${params.fieldsArray[0]},
+                        course_id=${params.fieldsArray[1]},
+                        period_id=${params.fieldsArray[2]},
+                        time_block_id=${params.fieldsArray[3]},
+                        classroom_id=${params.fieldsArray[4]} 
+                        WHERE schedule_id=${params.id}
+                    `;
+                    break;
+                }
+                
+
                 default: console.log('Invalid query at updateRow socket.');
                 break;
             }

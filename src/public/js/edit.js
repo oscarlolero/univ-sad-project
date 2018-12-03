@@ -6,7 +6,6 @@ socket.on('connect', () => {
 
 document.querySelector('.btn-add').addEventListener('click', () => {
     const type = document.querySelector('.js_global_container').dataset.type;
-    // const fields = document.querySelector('.insert-modal .modal-body'); //.childElementCount
     let numInputElements;
     let fieldsArray = [];
 
@@ -140,6 +139,17 @@ document.querySelector('.btn-edit').addEventListener('click', () => {
             } else {
                 fieldsArray.push(0);
             }
+            break;
+        }
+
+        case 'schedules': {
+            numInputElements = 0;
+            //Leer selects
+            fieldsArray.push(parseInt($('.edit-modal .s1').find(':selected').data('pro_id')));
+            fieldsArray.push(parseInt($('.edit-modal .s2').find(':selected').data('cou_id')));
+            fieldsArray.push(parseInt($('.edit-modal .s3').find(':selected').data('per_id')));
+            fieldsArray.push(parseInt($('.edit-modal .s4').find(':selected').data('tim_id')));
+            fieldsArray.push(parseInt($('.edit-modal .s5').find(':selected').data('cla_id')));
             break;
         }
 
@@ -300,7 +310,74 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
             }
 
             case 'schedules': {
+                let selector = document.querySelectorAll('.edit-modal .input100-select-edit');
+                socket.emit('getScheduleData', {
+                }, (data) => {
+                    let markup;
+                    Object.values(data).forEach((element, i) => {
+                        while(selector[i].firstChild) {
+                            selector[i].removeChild(selector[i].firstChild);
+                        }
+                    });
+                    
+                    //Rellenar y pre selecionnar selects 
+                    markup = '<option value="0">Select professor...</option>';
+                    Object.values(data.professorsData).forEach((e, i) => {
+                        markup = markup.concat(`<option value="${i+1}" data-pro_id="${e.professor_id}">${e.professor_name}</option>`);
+                    });
+                    selector[0].insertAdjacentHTML('beforeend', markup);
+                    for(let i = 0; i <= selector[0].childElementCount - 1; i++) {
+                        if(cols.children[0].textContent.trim() == selector[0].children[i].textContent.trim()) {
+                            selector[0].value = i;
+                        }
+                    }
 
+                    markup = '<option value="0">Select course...</option>';
+                    Object.values(data.coursesData).forEach((e, i) => {
+                        markup = markup.concat(`<option value="${i+1}" data-cou_id="${e.course_id}">${e.course_name}</option>`);
+                    });
+                    selector[1].insertAdjacentHTML('beforeend', markup);
+                    for(let i = 0; i <= selector[1].childElementCount - 1; i++) {
+                        if(`${cols.children[1].textContent.trim()} ${cols.children[2].textContent.trim()}` == selector[1].children[i].textContent.trim()) {
+                            selector[1].value = i;
+                        }
+                    }
+
+                    markup = '<option value="0">Select period...</option>';
+                    Object.values(data.periodsData).forEach((e, i) => {
+                        markup = markup.concat(`<option value="${i+1}" data-per_id="${e.period_id}">${e.period_name}</option>`);
+                    });
+                    selector[2].insertAdjacentHTML('beforeend', markup);
+                    for(let i = 0; i <= selector[2].childElementCount - 1; i++) {
+                        if(cols.children[3].textContent.trim() == selector[2].children[i].textContent.trim()) {
+                            selector[2].value = i;
+                        }
+                    }
+        
+                    markup = '<option value="0">Select time block...</option>';
+                    Object.values(data.timeblocksData).forEach((e, i) => {
+                        markup = markup.concat(`<option value="${i+1}" data-tim_id="${e.time_block_id}">${e.time_block_name}</option>`);
+                    });
+                    selector[3].insertAdjacentHTML('beforeend', markup);
+                    for(let i = 0; i <= selector[3].childElementCount - 1; i++) {
+                        if(cols.children[4].textContent.trim() == selector[3].children[i].textContent.trim()) {
+                            selector[3].value = i;
+                        }
+                    }
+        
+                    markup = '<option value="0">Select classroom...</option>';
+                    Object.values(data.classroomsData).forEach((e, i) => {
+                        markup = markup.concat(`<option value="${i+1}" data-cla_id="${e.classroom_id}">${e.classroom_name}</option>`);
+                    });
+                    selector[4].insertAdjacentHTML('beforeend', markup);
+                    for(let i = 0; i <= selector[4].childElementCount - 1; i++) {
+                        if(`${cols.children[5].textContent.trim()} (${cols.children[6].textContent.trim()})` == selector[4].children[i].textContent.trim()) {
+                            selector[4].value = i;
+                        }
+                    }
+
+                });
+  
             break;
             }
 
