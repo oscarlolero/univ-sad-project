@@ -4,6 +4,7 @@
 <head>
     <title>University time blocks</title>
     <% include partials/head %>
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
 </head>
 
 <body>
@@ -102,10 +103,36 @@
     <script src="vendor/bootstrap/js/popper.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
     <script src="vendor/xlsx/xlsx.full.min.js"></script>
     <script src="vendor/filesaver/FileSaver.min.js"></script>
     <script src="js/edit.js" type="module"></script>
-
+    <script>
+        $('#field1, #efield1').daterangepicker({
+            autoUpdateInput: false,
+            minYear: 2000,
+            maxYear: 2050,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 30,
+            "startDate": "11/01/2018",
+            "endDate": "11/02/2018",
+            "minDate": "11/01/2018",
+            "maxDate": "11/03/2018",
+            locale: {
+        
+            },
+            opens: "center"
+        }, function(start, end, label) {
+            // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+            $('#field1, #efield1').addClass('has-val');
+        });
+    
+        $('#field1, #efield1').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('H:mm') + ' - ' + picker.endDate.format('H:mm'));
+        });
+    </script>
 </body>
 
 </html>
