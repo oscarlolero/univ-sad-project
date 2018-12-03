@@ -9,7 +9,7 @@
 <body>
     <% include partials/nav %>
     <div class="schedules js_global_container" data-type="schedules">
-        <div class="table100 ver3 m-t-30 m-l-20 m-r-20">
+        <div class="table100 ver3 m-t-10 m-l-20 m-r-20">
             <table data-vertable="ver3">
                 <thead>
                     <tr class="row100 head">
@@ -20,7 +20,7 @@
                         <th class="column100 column5">Time block</th>
                         <th class="column100 column6">Classroom</th>
                         <th class="column100 column7">Building</th>
-                        <th class="column100 columnAction">Action</td>
+                        <th class="column100 columnAction">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -167,6 +167,8 @@
     <script src="vendor/bootstrap/js/popper.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/xlsx/xlsx.full.min.js"></script>
+    <script src="vendor/filesaver/FileSaver.min.js"></script>
     <script src="js/edit.js"></script>
     <script>
     document.querySelector('.schedules span').addEventListener('click', e => {

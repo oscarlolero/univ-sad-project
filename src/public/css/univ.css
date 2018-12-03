@@ -462,3 +462,48 @@ thead i:hover {
 .custom {
   top: -10px;
 }
+.exports-container {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 30px;
+}
+
+.exports-container span {
+  margin-right: 10px;
+}
+
+.export-excel i {
+  
+  color: rgb(83, 122, 85);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out
+}
+
+.export-excel i:hover {
+  color: rgb(76, 167, 81);
+  transition: all 0.3s ease-in-out;
+}
+
+.copy-clipboard i {
+  
+  color: rgb(141, 141, 141);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out
+}
+
+.copy-clipboard i:hover {
+  color: rgb(58, 58, 58);
+  transition: all 0.3s ease-in-out;
+}
+
+.print i {
+  
+  color: rgb(93, 122, 155);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out
+}
+
+.print i:hover {
+  color: rgb(131, 160, 194);
+  transition: all 0.3s ease-in-out;
+}

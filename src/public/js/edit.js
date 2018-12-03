@@ -300,55 +300,7 @@ document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener(
             }
 
             case 'schedules': {
-                //Get list of departments and select the actual department
-                // const selectsSelector = document.querySelectorAll('.input100-select-edit');
-                // console.log(selectsSelector);
-                // socket.emit('getDepartments', {
-                // }, (departments) => {
-                //     while (selectSelector.firstChild) {
-                //         selectSelector.removeChild(selectSelector.firstChild);
-                //     } 
-                //     let markup = '';
-                //     departments.forEach((e, index) => {
-                //         markup = markup.concat(`<option value="${index}" data-dep_id="${e.department_id}">${e.descr}</option>`);
-                //     });
-                //     selectSelector.insertAdjacentHTML('beforeend', markup);
 
-                //     for(let i = 0; i <= selectSelector.childElementCount - 1; i++) {
-                //         if(cols.children[1].textContent == selectSelector.children[i].textContent) {
-                //             selectSelector.value = i;
-                //         }
-                //     }
-                // });
-
-                // //Get inputs
-                // //Get first and last name   
-                // socket.emit('getProfessorName', {
-                //     professor_id: document.querySelector('.edit-modal').dataset.js_edit_id
-                // }, (professorRow) => {
-                //     const [fistNameField, lastNameField] = [document.getElementById('efield1'), document.getElementById('efield2')];
-                //     fistNameField.value = professorRow[0].first_name;
-                //     lastNameField.value = professorRow[0].last_name;
-                //     fistNameField.classList.add('has-val');
-                //     lastNameField.classList.add('has-val');
-                // });
-
-                // //Get username and password
-                // const [usernameField, passwordField] = [document.getElementById('efield3'), document.getElementById('efield4')];
-                // usernameField.value = cols.children[2].textContent.trim();
-                // passwordField.value = cols.children[3].textContent.trim();
-                // usernameField.classList.add('has-val');
-                // passwordField.classList.add('has-val');
-
-                // //Select if is admin or not
-                // const isAdminSelector = document.querySelector('.edit-modal .btn-group-toggle');
-                // if(cols.children[4].textContent.trim() === 'Yes') {
-                //     isAdminSelector.children[0].classList.remove('active');
-                //     isAdminSelector.children[1].classList.add('active');
-                // } else {
-                //     isAdminSelector.children[0].classList.add('active');
-                //     isAdminSelector.children[1].classList.remove('active');            
-                // }
             break;
             }
 
@@ -488,3 +440,54 @@ const getDaysAWeek = (mon, tue, wed, thu, fri, sat) => {
         sat ? 'Sat' : '',
     ].filter(el => el != '').join(', ');
 };
+
+//EXPORT TO EXCEL
+var wb = XLSX.utils.table_to_book(document.querySelector('table'), {sheet:"Sheet JS"});
+var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:true, type: 'binary'});
+function s2ab(s) {
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+}
+document.querySelector('.export-excel').addEventListener('click', e => {  
+    saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Admin table.xlsx');
+});
+
+document.querySelector('.copy-clipboard').addEventListener('click', e => {
+    selectElementContents(document.querySelector('table'));
+});
+
+document.querySelector('.print').addEventListener('click', e => {
+    printData(document.querySelector('table'));
+});
+
+const selectElementContents = (el) => {
+    var body = document.body, range, sel;
+    if (document.createRange && window.getSelection) {
+        range = document.createRange();
+        sel = window.getSelection();
+        sel.removeAllRanges();
+        try {
+            range.selectNodeContents(el);
+            sel.addRange(range);
+        } catch (e) {
+            range.selectNode(el);
+            sel.addRange(range);
+        }
+        document.execCommand('copy');
+    } else if (body.createTextRange) {
+        range = body.createTextRange();
+        range.moveToElementText(el);
+        range.select();
+        document.execCommand('copy');
+    }
+}
+
+const printData = (el) => {
+   var divToPrint= el;
+   newWin= window.open("");
+   newWin.document.write(divToPrint.outerHTML);
+   newWin.print();
+   newWin.close();
+}
